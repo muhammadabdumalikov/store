@@ -1,10 +1,11 @@
 import {
   CanActivate,
   ExecutionContext,
-  Inject,
+  ForbiddenException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { UserRoles } from 'src/domain/user/enum/user.enum';
 import { IUser } from 'src/domain/user/interface/user.interface';
 import { UserService } from 'src/domain/user/user.service';
@@ -12,21 +13,33 @@ import { UserHasNotPermissionException } from 'src/errors/permission.error';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
-  @Inject() private readonly userService: UserService;
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    let tokenId = request.headers.authorization;
+    let token = request.headers.authorization;
 
-    if (!tokenId) {
+    if (!token) {
       throw new UnauthorizedException();
     }
 
-    if (tokenId.startsWith('Bearer ')) {
-      tokenId = tokenId.substring('Bearer '.length);
-    }
+    // tokenId = tokenId.substring('Bearer '.length);
 
-    const user: IUser = await this.userService.findOne(tokenId);
+    try {
+      token = await this.jwtService.verifyAsync(token, {
+        secret: `store-app`,
+      });
+    } catch (error) {
+      throw new ForbiddenException();
+    }
+    console.log(token);
+    
+    const user: IUser = await this.userService.findOne(token.id);
+    console.log(user);
+    
 
     if (!user || !user.id) {
       throw new UnauthorizedException();

@@ -8,18 +8,26 @@ import {
   Delete,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto, UpdateUserDto, UserLoginDto } from './dto/user.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthService } from './auth.service';
 
 @ApiTags('User')
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthService,
+  ) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  create(@Body() params: CreateUserDto) {
+    return this.userService.create(params);
+  }
+
+  @Post('/login')
+  login(@Body() params: UserLoginDto) {
+    return this.authService.login(params);
   }
 
   @Get()

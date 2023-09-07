@@ -4,6 +4,14 @@ import { BaseRepo } from 'src/providers/base-dao';
 @Injectable()
 export class UserRepo extends BaseRepo<any> {
   constructor() {
-    super('user');
+    super('users');
+  }
+
+  selectByPhone(phone: string, columns = ['*']) {
+    return this.knex
+      .select(columns)
+      .from(this._tableName)
+      .where('phone', phone)
+      .first();
   }
 }
