@@ -56,4 +56,8 @@ export class BaseRepo<T extends {}> extends KnexBaseRepo {
     }
     return this.knex.insert(values).into(this._tableName).returning(returning);
   }
+
+  insert(value: T, returning = ['*']): Knex.QueryBuilder<T> {
+    return this._insert(value, { returning });
+  }
 }
