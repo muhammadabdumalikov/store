@@ -60,4 +60,27 @@ export class BaseRepo<T extends {}> extends KnexBaseRepo {
   insert(value: T, returning = ['*']): Knex.QueryBuilder<T> {
     return this._insert(value, { returning });
   }
+
+  select(
+    where,
+    options: { limit?: number; offset?: number; columns?: any } = {
+      limit: 0,
+      offset: 0,
+      columns: ['*'],
+    },
+  ): any {
+    let query = this.knexService.instance
+      .select(options.columns)
+      .from(this._tableName)
+      .where(where);
+
+    if (options.limit) {
+      query = query.limit(Number(options.limit));
+    }
+
+    if (options.offset) {
+      query = query.offset(Number(options.offset));
+    }
+    return query;
+  }
 }

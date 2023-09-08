@@ -18,11 +18,11 @@ export class CategoryService {
   }
 
   findAll() {
-    return `This action returns all category`;
+    return `This action returns a category`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  findOne(id: string) {
+    return this.categoryRepo.selectById(id);
   }
 
   update(id: number, updateCategoryDto: UpdateCategoryDto) {
