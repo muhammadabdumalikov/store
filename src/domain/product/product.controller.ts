@@ -13,6 +13,8 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { AuthGuard } from 'src/guard/auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { CurrentUser } from 'src/decorator/current-user.decorator';
+import { IUser } from '../user/interface/user.interface';
 
 @ApiTags('Product')
 @Controller('product')
@@ -37,12 +39,16 @@ export class ProductController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(id, updateProductDto);
+  update(
+    @Param('id') id: string,
+    @Body() params: UpdateProductDto,
+    @CurrentUser() user: IUser,
+  ) {
+    return this.productService.update(id, params, user);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productService.delete(id);
+  async delete(@Param('id') id: string, @CurrentUser() user: IUser) {
+    return this.productService.delete(id, user);
   }
 }

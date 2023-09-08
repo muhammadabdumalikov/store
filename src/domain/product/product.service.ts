@@ -2,6 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductRepo } from './product.repo';
+import { IUser } from '../user/interface/user.interface';
+import {
+  ProductNotFoundException,
+  UserHasNotOwnerPermissionException,
+} from 'src/errors/permission.error';
+import { isEmpty } from 'lodash';
 
 @Injectable()
 export class ProductService {
@@ -31,7 +37,17 @@ export class ProductService {
     return this.productRepo.selectById(id);
   }
 
-  update(id: string, params: UpdateProductDto) {
+  async update(id: string, params: UpdateProductDto, user: IUser) {
+    const product = await this.productRepo.selectById(id);
+
+    if (isEmpty(product)) {
+      throw new ProductNotFoundException();
+    }
+
+    if (product.owner_id !== user.id) {
+      throw new UserHasNotOwnerPermissionException();
+    }
+
     return this.productRepo.updateById(id, {
       name_uz: params.name_uz,
       name_ru: params.name_ru,
@@ -46,7 +62,19 @@ export class ProductService {
     });
   }
 
-  delete(id: string) {
-    return this.productRepo.softDelete(id);
+  async delete(id: string, user: IUser) {
+    const product = await this.productRepo.selectById(id);
+
+    if (isEmpty(product)) {
+      throw new ProductNotFoundException();
+    }
+
+    if (product.owner_id !== user.id) {
+      throw new UserHasNotOwnerPermissionException();
+    }
+
+    await this.productRepo.softDelete(id);
+
+    return { success: true };
   }
 }
