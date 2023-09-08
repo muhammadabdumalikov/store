@@ -18,7 +18,10 @@ export class CategoryService {
   }
 
   findAll() {
-    return `This action returns a category`;
+    return this.categoryRepo.select(
+      { is_deleted: false, parent_id: null },
+      { limit: 10 },
+    );
   }
 
   findOne(id: string) {
@@ -29,7 +32,7 @@ export class CategoryService {
     return `This action updates a #${id} category`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} category`;
+  delete(id: string) {
+    return this.categoryRepo.softDelete(id);
   }
 }

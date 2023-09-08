@@ -33,7 +33,7 @@ export class ProductController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.productService.findOne(+id);
+    return this.productService.findOne(id);
   }
 
   @Patch(':id')
@@ -43,6 +43,6 @@ export class ProductController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.productService.remove(+id);
+    return this.productService.delete(id);
   }
 }

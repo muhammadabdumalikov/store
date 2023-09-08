@@ -5,7 +5,7 @@ import { ProductRepo } from './product.repo';
 
 @Injectable()
 export class ProductService {
-  constructor(private readonly productRepo: ProductRepo) { }
+  constructor(private readonly productRepo: ProductRepo) {}
 
   async create(params: CreateProductDto) {
     return this.productRepo.insert({
@@ -24,18 +24,18 @@ export class ProductService {
   }
 
   findAll() {
-    return `This action returns all product`;
+    return this.productRepo.select({ is_deleted: false }, { limit: 10 });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  findOne(id: string) {
+    return this.productRepo.selectById(id);
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {
     return `This action updates a #${id} product`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  delete(id: string) {
+    return this.productRepo.softDelete(id);
   }
 }

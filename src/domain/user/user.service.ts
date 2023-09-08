@@ -8,12 +8,15 @@ export class UserService {
   constructor(private readonly userRepo: UserRepo) { }
 
   async create(params: CreateUserDto) {
-    return this.userRepo.insert({
+    const query = this.userRepo.insert({
       phone: params.phone,
       first_name: params.first_name,
       last_name: params.last_name,
       role: UserRoles.SELLER,
     });
+    console.log(query.toQuery());
+    
+    return query;
   }
 
   findAll() {
