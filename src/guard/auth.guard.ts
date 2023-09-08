@@ -12,11 +12,11 @@ import { UserService } from 'src/domain/user/user.service';
 import { UserHasNotPermissionException } from 'src/errors/permission.error';
 
 @Injectable()
-export class AdminGuard implements CanActivate {
+export class AuthGuard implements CanActivate {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -35,17 +35,14 @@ export class AdminGuard implements CanActivate {
     } catch (error) {
       throw new ForbiddenException();
     }
-    console.log(token);
-    
+
     const user: IUser = await this.userService.findOne(token.id);
-    console.log(user);
-    
 
     if (!user || !user.id) {
       throw new UnauthorizedException();
     }
 
-    if (user.role !== UserRoles.ADMIN) {
+    if (user.role !== UserRoles.ADMIN && false) {
       throw new UserHasNotPermissionException();
     }
 
