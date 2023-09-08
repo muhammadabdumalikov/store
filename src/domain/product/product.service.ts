@@ -31,8 +31,19 @@ export class ProductService {
     return this.productRepo.selectById(id);
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  update(id: string, params: UpdateProductDto) {
+    return this.productRepo.updateById(id, {
+      name_uz: params.name_uz,
+      name_ru: params.name_ru,
+      name_lat: params.name_lat,
+      image: params.image_url,
+      owner_id: params.owner_id,
+      price: params.price,
+      sale_price: params.sale_price,
+      characteristic: params.characteristic,
+      description: params.description,
+      count: params.count,
+    });
   }
 
   delete(id: string) {

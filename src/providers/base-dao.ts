@@ -84,6 +84,14 @@ export class BaseRepo<T extends {}> extends KnexBaseRepo {
     return query;
   }
 
+  updateById(id: string, value: T, returning = ['*']): Knex.QueryBuilder<T> {
+    return this.knexService
+      .instance(this._tableName)
+      .update(value)
+      .where('id', id)
+      .returning(returning);
+  }
+
   softDelete(id) {
     return this.knexService.instance
       .update({ is_delete: true })
