@@ -46,3 +46,6 @@ create table products
 
 alter table category
 add column last_child bool default false;
+
+alter table products
+add column status smallint not null default 0;

@@ -37,10 +37,6 @@ export class CreateProductDto {
   count: number;
 
   @ApiProperty()
-  @IsString()
-  owner_id: string;
-
-  @ApiProperty()
   @IsObject()
   @IsOptional()
   characteristic?: object;

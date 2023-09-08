@@ -18,10 +18,7 @@ export class CategoryService {
   }
 
   findAll() {
-    return this.categoryRepo.select(
-      { is_deleted: false, parent_id: null },
-      { limit: 10 },
-    );
+    return this.categoryRepo.select({ is_deleted: false }, { limit: 10 });
   }
 
   findOne(id: string) {

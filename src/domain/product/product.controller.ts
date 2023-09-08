@@ -24,8 +24,8 @@ export class ProductController {
   @UseGuards(AuthGuard)
   @ApiBearerAuth('authorization')
   @Post()
-  create(@Body() params: CreateProductDto) {
-    return this.productService.create(params);
+  create(@Body() params: CreateProductDto, @CurrentUser() currentUser: IUser) {
+    return this.productService.create(params, currentUser);
   }
 
   @Get()
@@ -42,9 +42,9 @@ export class ProductController {
   update(
     @Param('id') id: string,
     @Body() params: UpdateProductDto,
-    @CurrentUser() user: IUser,
+    @CurrentUser() currentUser: IUser,
   ) {
-    return this.productService.update(id, params, user);
+    return this.productService.update(id, params, currentUser);
   }
 
   @Delete(':id')

@@ -13,14 +13,14 @@ import { isEmpty } from 'lodash';
 export class ProductService {
   constructor(private readonly productRepo: ProductRepo) {}
 
-  async create(params: CreateProductDto) {
+  async create(params: CreateProductDto, currentUser: IUser) {
     return this.productRepo.insert({
       name_uz: params.name_uz,
       name_ru: params.name_ru,
       name_lat: params.name_lat,
       category_id: params.category_id,
       image: params.image_url,
-      owner_id: params.owner_id,
+      owner_id: currentUser.id,
       price: params.price,
       sale_price: params.sale_price,
       characteristic: params.characteristic,
@@ -37,14 +37,14 @@ export class ProductService {
     return this.productRepo.selectById(id);
   }
 
-  async update(id: string, params: UpdateProductDto, user: IUser) {
+  async update(id: string, params: UpdateProductDto, currentUser: IUser) {
     const product = await this.productRepo.selectById(id);
 
     if (isEmpty(product)) {
       throw new ProductNotFoundException();
     }
 
-    if (product.owner_id !== user.id) {
+    if (product.owner_id !== currentUser.id) {
       throw new UserHasNotOwnerPermissionException();
     }
 
@@ -53,7 +53,6 @@ export class ProductService {
       name_ru: params.name_ru,
       name_lat: params.name_lat,
       image: params.image_url,
-      owner_id: params.owner_id,
       price: params.price,
       sale_price: params.sale_price,
       characteristic: params.characteristic,
