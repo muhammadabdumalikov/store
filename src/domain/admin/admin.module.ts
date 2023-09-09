@@ -7,9 +7,10 @@ import { AdminCategoryRepo } from './repo/category.repo';
 import { AdminProductRepo } from './repo/product.repo';
 import { UserModule } from '../user/user.module';
 import { JwtService } from '@nestjs/jwt';
+import { ProductModule } from '../product/product.module';
 
 @Module({
-  imports: [UserModule],
+  imports: [UserModule, ProductModule],
   controllers: [AdminCategoryController, AdminProductController],
   providers: [
     AdminCategoryService,

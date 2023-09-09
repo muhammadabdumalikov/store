@@ -28,3 +28,9 @@ export class ProductNotFoundException extends NotFoundException {
     super({ code: `${ErrorCodes.PRODUCT_NOT_FOUND}` });
   }
 }
+
+export class CategoryNotFoundException extends NotFoundException {
+  constructor() {
+    super({ code: `${ErrorCodes.CATEGORY_NOT_FOUND}` });
+  }
+}

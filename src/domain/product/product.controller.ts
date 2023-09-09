@@ -7,10 +7,14 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import {
+  CreateProductDto,
+  ProductListByCategoryDto,
+  UpdateProductDto,
+} from './dto/product.dto';
 import { AuthGuard } from 'src/guard/auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from 'src/decorator/current-user.decorator';
@@ -29,8 +33,16 @@ export class ProductController {
   }
 
   @Get()
-  findAll() {
-    return this.productService.findAll();
+  findAll(@CurrentUser() user: IUser) {
+    return this.productService.findAll(user);
+  }
+
+  @Get('list-by-category')
+  listByCategory(
+    @Query() query: ProductListByCategoryDto,
+    @CurrentUser() user: IUser,
+  ) {
+    return this.productService.listByCategory(query, user);
   }
 
   @Get(':id')

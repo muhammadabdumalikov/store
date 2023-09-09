@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { IsOptional, IsString } from 'class-validator';
 
 export class CreateCategoryDto {
@@ -24,3 +24,5 @@ export class CreateCategoryDto {
   @IsOptional()
   parent_id?: string;
 }
+
+export class UpdateCategoryDto extends PartialType(CreateCategoryDto) { }
