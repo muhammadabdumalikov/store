@@ -7,15 +7,17 @@ import { UserRoles } from './enum/user.enum';
 export class UserService {
   constructor(private readonly userRepo: UserRepo) { }
 
-  async create(params: CreateUserDto) {
+  async signUp(params: CreateUserDto) {
+    const otp = Math.floor(10000 + Math.random() * 90000);
+
     const query = this.userRepo.insert({
       phone: params.phone,
-      first_name: params.first_name,
-      last_name: params.last_name,
+      // first_name: params.first_name,
+      // last_name: params.last_name,
       role: UserRoles.SELLER,
+      otp: otp,
     });
-    console.log(query.toQuery());
-    
+
     return query;
   }
 

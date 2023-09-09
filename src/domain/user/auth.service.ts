@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UserLoginDto } from './dto/user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UserRepo } from './user.repo';
-import { UserNotFoundException } from 'src/errors/permission.error';
+import { IncorrectOtpException, UserNotFoundException } from 'src/errors/permission.error';
 import { IUser } from './interface/user.interface';
 
 @Injectable()
@@ -17,6 +17,10 @@ export class AuthService {
 
     if (!user) {
       throw new UserNotFoundException();
+    }
+
+    if (user.otp !== params.otp) {
+      throw new IncorrectOtpException();
     }
 
     return this.jwtService.signAsync(

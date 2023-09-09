@@ -21,4 +21,8 @@ export class UserLoginDto {
   @ApiProperty()
   @IsString()
   phone: string;
+
+  @ApiProperty()
+  @IsString()
+  otp: string;
 }

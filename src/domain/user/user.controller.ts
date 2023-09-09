@@ -20,12 +20,12 @@ export class UserController {
     private readonly authService: AuthService,
   ) {}
 
-  @Post()
-  create(@Body() params: CreateUserDto) {
-    return this.userService.create(params);
+  @Post('signup')
+  signUp(@Body() params: CreateUserDto) {
+    return this.userService.signUp(params);
   }
 
-  @Post('/login')
+  @Post('login')
   login(@Body() params: UserLoginDto) {
     return this.authService.login(params);
   }

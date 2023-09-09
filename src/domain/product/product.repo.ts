@@ -68,8 +68,6 @@ export class ProductRepo extends BaseRepo<any> {
       query.limit(Number(params.limit)).offset(Number(params.offset));
     }
 
-    console.log(query.toQuery());
-
     return query;
   }
 }

@@ -17,6 +17,12 @@ export class UserNotFoundException extends NotFoundException {
   }
 }
 
+export class IncorrectOtpException extends NotFoundException {
+  constructor() {
+    super({ code: `${ErrorCodes.INCORRECT_OTP}` });
+  }
+}
+
 export class UserHasNotOwnerPermissionException extends BadRequestException {
   constructor() {
     super({ code: `${ErrorCodes.USER_HAS_NOT_OWNER_PERMISSION}` });
