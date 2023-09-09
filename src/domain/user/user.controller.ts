@@ -8,7 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto, UpdateUserDto, UserLoginDto } from './dto/user.dto';
+import { ConfirmOtpDto, CreateUserDto, UpdateUserDto, UserLoginDto } from './dto/user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 
@@ -23,6 +23,11 @@ export class UserController {
   @Post('signup')
   signUp(@Body() params: CreateUserDto) {
     return this.userService.signUp(params);
+  }
+
+  @Post('confirm-otp')
+  confirmOtp(@Body() params: ConfirmOtpDto) {
+    return this.authService.confirmOtp(params);
   }
 
   @Post('login')

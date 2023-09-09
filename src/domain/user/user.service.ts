@@ -13,8 +13,8 @@ export class UserService {
 
     const [user]: [IUser] = await this.userRepo.insert({
       phone: params.phone,
-      // first_name: params.first_name,
-      // last_name: params.last_name,
+      first_name: params.first_name,
+      last_name: params.last_name,
       role: UserRoles.SELLER,
       otp: otp,
       status: UserStatus.REGISTERED,

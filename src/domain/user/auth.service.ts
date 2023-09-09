@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserLoginDto } from './dto/user.dto';
+import { ConfirmOtpDto, UserLoginDto } from './dto/user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UserRepo } from './user.repo';
 import { IncorrectOtpException, UserNotFoundException } from 'src/errors/permission.error';
@@ -12,7 +12,7 @@ export class AuthService {
     private readonly userRepo: UserRepo,
   ) {}
 
-  async login(params: UserLoginDto) {
+  async confirmOtp(params: ConfirmOtpDto) {
     const user: IUser = await this.userRepo.selectByPhone(params.phone);
 
     if (!user) {
@@ -21,6 +21,19 @@ export class AuthService {
 
     if (user.otp !== params.otp) {
       throw new IncorrectOtpException();
+    }
+
+    return this.jwtService.signAsync(
+      { id: user.id },
+      { privateKey: 'store-app' },
+    );
+  }
+
+  async login(params: UserLoginDto) {
+    const user: IUser = await this.userRepo.selectByPhone(params.phone);
+
+    if (!user) {
+      throw new UserNotFoundException();
     }
 
     return this.jwtService.signAsync(

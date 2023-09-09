@@ -17,7 +17,7 @@ export class CreateUserDto {
 
 export class UpdateUserDto extends PartialType(CreateUserDto) { }
 
-export class UserLoginDto {
+export class ConfirmOtpDto {
   @ApiProperty()
   @IsString()
   phone: string;
@@ -25,4 +25,10 @@ export class UserLoginDto {
   @ApiProperty()
   @IsString()
   otp: string;
+}
+
+export class UserLoginDto {
+  @ApiProperty()
+  @IsString()
+  phone: string;
 }
