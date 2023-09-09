@@ -68,12 +68,12 @@ export class ProductListByCategoryDto extends ListPageDto {
   sort?: SortType;
 
   @ApiPropertyOptional()
-  @IsNumber()
+  // @IsNumber()
   @IsOptional()
   from_price?: number;
 
   @ApiPropertyOptional()
-  @IsNumber()
+  // @IsNumber()
   @IsOptional()
   to_price?: number;
 }

@@ -19,7 +19,7 @@ export class ProductRepo extends BaseRepo<any> {
         'product.name_uz',
         'product.name_ru',
         'product.price',
-        'product.sale_price',
+        knex.raw('coalesce(product.sale_price, product.price) as sale_price'),
         'product.count',
         'product.image',
         knex.raw(
@@ -58,9 +58,17 @@ export class ProductRepo extends BaseRepo<any> {
       }
     }
 
+    if (params.from_price) {
+      query.whereRaw(
+        `sale_price >= ${params.from_price} and sale_price <= ${params.to_price}`,
+      );
+    }
+
     if (params.limit) {
       query.limit(Number(params.limit)).offset(Number(params.offset));
     }
+
+    console.log(query.toQuery());
 
     return query;
   }
