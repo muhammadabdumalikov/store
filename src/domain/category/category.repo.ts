@@ -7,11 +7,11 @@ export class CategoryRepo extends BaseRepo<any> {
     super('category');
   }
 
-  async getWithChildren(id: string) {
+  async getWithChildren() {
     const knex = this.knexService.instance;
 
     const query = knex.raw(`WITH RECURSIVE
-c_with_level AS (
+    c_with_level AS (
     
     SELECT *, 0 as lvl
     FROM   category

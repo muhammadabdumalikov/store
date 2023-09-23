@@ -13,7 +13,7 @@ export class CategoryService {
     return this.categoryRepo.selectById(id);
   }
 
-  getWithChildren(id: string) {
-    return this.categoryRepo.getWithChildren(id);
+  getWithChildren() {
+    return this.categoryRepo.getWithChildren();
   }
 }
