@@ -12,4 +12,8 @@ export class CategoryService {
   findOne(id: string) {
     return this.categoryRepo.selectById(id);
   }
+
+  getWithChildren(id: string) {
+    return this.categoryRepo.getWithChildren(id);
+  }
 }

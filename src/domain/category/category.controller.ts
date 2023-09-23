@@ -12,8 +12,9 @@ export class CategoryController {
     return this.categoryService.findAll();
   }
 
+
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.categoryService.findOne(id);
+  async getWithChildren(@Param('id') id: string) {
+    return this.categoryService.getWithChildren(id);
   }
 }
