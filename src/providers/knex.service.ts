@@ -10,8 +10,12 @@ export class KnexService {
         host: 'rain.db.elephantsql.com',
         database: 'jsskmqpe',
         password: 'IIWPSMjS-Y4bxIR5F7MqRUhDm0eAnVxq',
-        user: 'jsskmqpe'
-      }
+        user: 'jsskmqpe',
+      },
+      pool: {
+        min: 1,
+        max: 10,
+      },
     })
   }
 }

@@ -3,10 +3,14 @@ import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 import { UserRepo } from './user.repo';
 import { UserRoles, UserStatus } from './enum/user.enum';
 import { IUser } from './interface/user.interface';
+import { EmailConfirmationService } from './email-confirmaton.service';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepo: UserRepo) {}
+  constructor(
+    private readonly userRepo: UserRepo,
+    private readonly emailService: EmailConfirmationService,
+  ) {}
 
   async signUp(params: CreateUserDto) {
     const otp = Math.floor(10000 + Math.random() * 90000);
@@ -19,6 +23,11 @@ export class UserService {
       otp: otp,
       status: UserStatus.REGISTERED,
     });
+
+    await this.emailService.sendVerificationLink(
+      'fromfulanemail@gmail.com',
+      otp,
+    );
 
     return { otp: user.otp, phone: user.phone };
   }

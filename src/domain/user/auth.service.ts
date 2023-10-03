@@ -2,7 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { ConfirmOtpDto, UserLoginDto } from './dto/user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UserRepo } from './user.repo';
-import { IncorrectOtpException, UserNotFoundException } from 'src/errors/permission.error';
+import {
+  IncorrectOtpException,
+  UserNotFoundException,
+} from 'src/errors/permission.error';
 import { IUser } from './interface/user.interface';
 
 @Injectable()
