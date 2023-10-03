@@ -93,8 +93,9 @@ export class BaseRepo<T extends {}> extends KnexBaseRepo {
   }
 
   softDelete(id) {
-    return this.knexService.instance
-      .update({ is_delete: true })
+    return this.knexService
+      .instance(this._tableName)
+      .update({ is_deleted: true })
       .where('id', id);
   }
 }
