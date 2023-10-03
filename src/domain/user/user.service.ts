@@ -24,10 +24,7 @@ export class UserService {
       status: UserStatus.REGISTERED,
     });
 
-    await this.emailService.sendVerificationLink(
-      'fromfulanemail@gmail.com',
-      otp,
-    );
+    await this.emailService.sendVerificationLink(params.email, otp);
 
     return { otp: user.otp, phone: user.phone };
   }

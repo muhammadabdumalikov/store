@@ -11,7 +11,7 @@ export class EmailConfirmationService {
     return this.emailService.sendMail({
       to: email,
       subject: 'Email confirmation',
-      text: `OTP code /n ${otp}`,
+      text: `OTP code \n ${otp}`,
     });
   }
 }
