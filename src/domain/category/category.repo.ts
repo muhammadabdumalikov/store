@@ -75,4 +75,16 @@ WHERE lvl = 0;`);
 
     return data['rows'];
   }
+
+  async getAllParentCategories() {
+    const knex = this.knexService.instance;
+
+    const query = knex
+      .select(['c.id', 'c.name_uz', 'c.name_ru', 'c.name_lat', 'c.image'])
+      .from('category as c')
+      .where('is_deleted', false)
+      .where('parent_id', null);
+
+    return query;
+  }
 }
