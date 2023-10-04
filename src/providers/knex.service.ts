@@ -7,14 +7,14 @@ export class KnexService {
     this.instance = knex({
       client: 'postgresql',
       connection: {
-        host: 'localhost',
-        database: 'store',
-        password: '5432',
-        user: 'postgres'
+        host: 'rain.db.elephantsql.com',
+        database: 'jsskmqpe',
+        password: 'IIWPSMjS-Y4bxIR5F7MqRUhDm0eAnVxq',
+        user: 'jsskmqpe'
       },
       pool: {
-        min: 2,
-        max: 75,
+        min: 1,
+        max: 3,
       },
     })
   }

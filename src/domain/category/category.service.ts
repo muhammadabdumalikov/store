@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CategoryRepo } from './category.repo';
+import { GetChildCategoriesDto } from './dto/category.dto';
 
 @Injectable()
 export class CategoryService {
@@ -13,8 +14,8 @@ export class CategoryService {
     return this.categoryRepo.selectById(id);
   }
 
-  getWithChildren() {
-    return this.categoryRepo.getWithChildren();
+  getWithChildren(id) {
+    return this.categoryRepo.getWithChildren(id);
   }
 
   async getAllParentCategories() {

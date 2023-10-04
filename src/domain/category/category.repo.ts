@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { BaseRepo } from 'src/providers/base-dao';
+import { GetChildCategoriesDto } from './dto/category.dto';
 
 @Injectable()
 export class CategoryRepo extends BaseRepo<any> {
@@ -7,7 +8,7 @@ export class CategoryRepo extends BaseRepo<any> {
     super('category');
   }
 
-  async getWithChildren() {
+  async getWithChildren(id) {
     const knex = this.knexService.instance;
 
     const query = knex.raw(`WITH RECURSIVE
@@ -15,13 +16,14 @@ export class CategoryRepo extends BaseRepo<any> {
     
     SELECT *, 0 as lvl
     FROM   category
-    WHERE  parent_id IS NULL
+    WHERE  parent_id IS NULL and is_deleted = false and id = '${id}'
 
     UNION ALL
     
     SELECT child.*, parent.lvl + 1
     FROM   category child
     JOIN   c_with_level parent ON parent.id = child.parent_id
+    where child.is_deleted = false
 ),
 maxlvl AS (
   SELECT max(lvl) maxlvl FROM c_with_level
