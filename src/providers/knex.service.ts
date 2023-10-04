@@ -8,7 +8,7 @@ export class KnexService {
       client: 'postgresql',
       connection: {
         host: 'localhost',
-        database: 'public',
+        database: 'store',
         password: '5432',
         user: 'postgres'
       },
