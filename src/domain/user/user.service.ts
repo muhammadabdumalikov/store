@@ -13,9 +13,9 @@ export class UserService {
   ) {}
 
   async signUp(params: CreateUserDto) {
-    const user: IUser = await this.userRepo.selectByPhone(params.phone);
+    const hasUser: IUser = await this.userRepo.selectByPhone(params.phone);
 
-    if (user) {
+    if (hasUser) {
       return { code: 110 };
     }
     
