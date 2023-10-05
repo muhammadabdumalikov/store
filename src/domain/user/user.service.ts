@@ -26,7 +26,7 @@ export class UserService {
 
     await this.emailService.sendVerificationLink(params.email, otp);
 
-    return { otp: user.otp, phone: user.phone };
+    return { user: user };
   }
 
   findAll() {
