@@ -28,7 +28,7 @@ export class ProductService {
     });
   }
 
-  findAll(user: IUser) {
+  getUserProducts(user: IUser) {
     return this.productRepo.select(
       { is_deleted: false, owner_id: user.id },
       { limit: 10 },
@@ -54,7 +54,7 @@ export class ProductService {
       throw new UserHasNotOwnerPermissionException();
     }
 
-    return this.productRepo.updateById(id, {
+    return await this.productRepo.updateById(id, {
       name_uz: params.name_uz,
       name_ru: params.name_ru,
       name_lat: params.name_lat,

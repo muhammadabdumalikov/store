@@ -13,8 +13,8 @@ export class CategoryService {
     return this.categoryRepo.selectById(id);
   }
 
-  getWithChildren() {
-    return this.categoryRepo.getWithChildren();
+  async getWithChildren(parent_id: string) {
+    return this.categoryRepo.getWithChildren(parent_id);
   }
 
   async getAllParentCategories() {
