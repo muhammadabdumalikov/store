@@ -78,7 +78,7 @@ export class CategoryRepo extends BaseRepo<any> {
         'parent.name_lat',
         'parent.name_ru',
         knex.raw(`case 
-          when child id is not null 
+          when child.id is not null 
             then jsonb_agg(json_build_object(
               'id', child.id,
               'name_uz', child.name_uz,
@@ -98,6 +98,7 @@ export class CategoryRepo extends BaseRepo<any> {
       .whereRaw('parent.parent_id is not null')
       .where('parent.is_deleted', false)
       .groupBy(['parent.id', 'child.id']);
+    // console.log(query.toQuery());
 
     // select "parent"."id", "parent"."name_uz", "parent"."name_lat", "parent"."name_ru", case when child.id is not null then jsonb_agg(json_build_object(
     //   'id', child.id,
