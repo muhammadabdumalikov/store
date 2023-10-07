@@ -6,9 +6,16 @@ import { UserModule } from './domain/user/user.module';
 import { ProductModule } from './domain/product/product.module';
 import { AdminModule } from './domain/admin/admin.module';
 import { PoolService } from './providers/pool.service';
+import { FileRouterModule } from './domain/file-router/file-router.module';
 
 @Module({
-  imports: [CategoryModule, UserModule, ProductModule, AdminModule],
+  imports: [
+    CategoryModule,
+    UserModule,
+    ProductModule,
+    AdminModule,
+    FileRouterModule,
+  ],
   controllers: [AppController],
   providers: [AppService, PoolService],
 })

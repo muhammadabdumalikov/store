@@ -14,8 +14,8 @@ export class CategoryService {
     return this.categoryRepo.selectById(id);
   }
 
-  getWithChildren(id) {
-    return this.categoryRepo.getWithChildren(id);
+  async getWithChildren(parent_id: string) {
+    return this.categoryRepo.getWithChildren(parent_id);
   }
 
   async getAllParentCategories() {

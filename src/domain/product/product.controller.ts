@@ -32,9 +32,11 @@ export class ProductController {
     return this.productService.create(params, currentUser);
   }
 
-  @Get()
-  findAll(@CurrentUser() user: IUser) {
-    return this.productService.findAll(user);
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth('authorization')
+  @Get('my')
+  getUserProducts(@CurrentUser() user: IUser) {
+    return this.productService.getUserProducts(user);
   }
 
   @Get('list-by-category')
@@ -50,6 +52,8 @@ export class ProductController {
     return this.productService.findOne(id);
   }
 
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth('authorization')
   @Patch(':id')
   update(
     @Param('id') id: string,

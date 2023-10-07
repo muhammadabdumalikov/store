@@ -7,9 +7,9 @@ import { ApiTags } from '@nestjs/swagger';
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) { }
 
-  @Get('childs/:id')
-  getAll(@Param('id') id: string) {
-    return this.categoryService.getWithChildren(id);
+  @Get('children/:parent_id')
+  getAll(@Param('parent_id') parent_id: string) {
+    return this.categoryService.getWithChildren(parent_id);
   }
 
   @Get('parents')

@@ -23,7 +23,7 @@ export class ProductRepo extends BaseRepo<any> {
         'product.count',
         'product.image',
         knex.raw(
-          'coalesce(round(100 - ((product.sale_price::float / product.price::float) * 100)), 0) as discount',
+          'coalesce(round(100 - ((product.sale_price::numeric / product.price::numeric) * 100)), 0) as discount',
         ),
       ])
       .from('products as product')
