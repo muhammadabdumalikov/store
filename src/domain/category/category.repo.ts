@@ -90,7 +90,7 @@ export class CategoryRepo extends BaseRepo<any> {
           knex.raw('child.is_deleted = false'),
         );
       })
-      .where('parent.parent_id', parent_id)
+      .where('parent.id', parent_id)
       .whereRaw('parent.parent_id is not null')
       .where('parent.is_deleted', false)
       .groupBy(['parent.id']);
