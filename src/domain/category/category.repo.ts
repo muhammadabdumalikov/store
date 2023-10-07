@@ -78,14 +78,12 @@ export class CategoryRepo extends BaseRepo<any> {
         'parent.name_lat',
         'parent.name_ru',
         knex.raw(`case 
-          when child.id is not null 
-            then jsonb_agg(json_build_object(
+            jsonb_agg(when child.id is not null then json_build_object(
               'id', child.id,
               'name_uz', child.name_uz,
               'name_lat', child.name_lat,
               'name_ru', child.name_ru
-            ))
-            else '[]'
+            ) else null )
           end children`),
       ])
       .from('category as parent')
@@ -97,17 +95,17 @@ export class CategoryRepo extends BaseRepo<any> {
       .where('parent.parent_id', parent_id)
       .whereRaw('parent.parent_id is not null')
       .where('parent.is_deleted', false)
-      .groupBy(['parent.id', 'child.id']);
+      .groupBy(['parent.id']);
     // console.log(query.toQuery());
 
-    // select "parent"."id", "parent"."name_uz", "parent"."name_lat", "parent"."name_ru", case when child.id is not null then jsonb_agg(json_build_object(
+    // select "parent"."id", "parent"."name_uz", "parent"."name_lat", "parent"."name_ru", jsonb_agg(case when child.id is not null then json_build_object(
     //   'id', child.id,
     //   'name_uz', child.name_uz,
     //   'name_lat', child.name_lat,
     //   'name_ru', child.name_ru
-    // )) else '[]' end children from "category" as "parent" left join "category" as "child" on "parent"."id" = "child"."parent_id"
+    // ) else null end) as children from "category" as "parent" left join "category" as "child" on "parent"."id" = "child"."parent_id"
     // and child.is_deleted = false where "parent"."parent_id" = '652162536b48447df92d26c5'
-    // and parent.parent_id is not null and "parent"."is_deleted" = false group by "parent"."id", child.id;
+    // and parent.parent_id is not null and "parent"."is_deleted" = false group by "parent"."id";
 
     const data = await query;
 
