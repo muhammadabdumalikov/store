@@ -78,13 +78,15 @@ export class CategoryRepo extends BaseRepo<any> {
         'parent.name_lat',
         'parent.name_ru',
         knex.raw(` 
-            jsonb_agg(case when child.id is not null then json_build_object(
+            jsonb_agg(case when child.id is not null 
+              then json_build_object(
               'id', child.id,
               'name_uz', child.name_uz,
               'name_lat', child.name_lat,
               'name_ru', child.name_ru
-            ) else null )
-          end children`),
+            ) else null
+             end)
+          as children`),
       ])
       .from('category as parent')
       .leftJoin('category as child', function () {
