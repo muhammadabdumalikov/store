@@ -18,17 +18,17 @@ export class ProductService {
 
   async create(params: CreateProductDto, currentUser: IUser) {
     return this.productRepo.insert({
-      name_uz: params.name_uz,
-      name_ru: params.name_ru,
-      name_lat: params.name_lat,
-      category_id: params.category_id,
-      image: params.image_url,
-      owner_id: currentUser.id,
-      price: params.price,
-      sale_price: params.sale_price,
-      characteristic: params.characteristic,
-      description: params.description,
-      count: params.count,
+      name_uz: params?.name_uz,
+      name_ru: params?.name_ru,
+      name_lat: params?.name_lat,
+      category_id: params?.category_id,
+      image: params?.image_url,
+      owner_id: currentUser?.id,
+      price: params?.price,
+      sale_price: params?.sale_price,
+      characteristic: params?.characteristic,
+      description: params?.description,
+      count: params?.count,
     });
   }
 

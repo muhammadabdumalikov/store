@@ -1,11 +1,17 @@
-import { Controller, Post, Body, UseGuards, Get, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Get,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AdminProductService } from '../service/product.service';
 import { SetProductStatusDto } from '../dto/product-admin.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from 'src/guard/admin.guard';
 import { ProductService } from 'src/domain/product/product.service';
-import { CurrentUser } from 'src/decorator/current-user.decorator';
-import { IUser } from 'src/domain/user/interface/user.interface';
 
 @ApiTags('Admin')
 @ApiBearerAuth('authorization')

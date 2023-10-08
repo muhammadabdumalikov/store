@@ -28,7 +28,7 @@ export class AdminCategoryController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, params: UpdateCategoryDto) {
+  async update(@Param('id') id: string, @Body() params: UpdateCategoryDto) {
     return this.adminCategoryService.update(id, params);
   }
 
