@@ -63,10 +63,20 @@ export class BaseRepo<T extends {}> extends KnexBaseRepo {
 
   select(
     where,
-    options: { limit?: number; offset?: number; columns?: any } = {
+    options: {
+      limit?: number;
+      offset?: number;
+      columns?: any;
+      order_by?: { column: string; order: 'asc' | 'desc'; use: boolean };
+    } = {
       limit: 0,
       offset: 0,
       columns: ['*'],
+      order_by: {
+        column: 'created_at',
+        order: 'asc',
+        use: false,
+      },
     },
   ): any {
     let query = this.knexService.instance
@@ -81,6 +91,11 @@ export class BaseRepo<T extends {}> extends KnexBaseRepo {
     if (options.offset) {
       query = query.offset(Number(options.offset));
     }
+
+    if (options.order_by.use) {
+      query = query.orderBy(options.order_by.column, options.order_by.order);
+    }
+
     return query;
   }
 

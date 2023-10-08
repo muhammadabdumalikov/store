@@ -1,5 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProductDto, ProductListByCategoryDto, UpdateProductDto } from './dto/product.dto';
+import {
+  CreateProductDto,
+  ProductListByCategoryDto,
+  UpdateProductDto,
+} from './dto/product.dto';
 import { ProductRepo } from './product.repo';
 import { IUser } from '../user/interface/user.interface';
 import {
@@ -10,7 +14,7 @@ import { isEmpty } from 'lodash';
 
 @Injectable()
 export class ProductService {
-  constructor(private readonly productRepo: ProductRepo) { }
+  constructor(private readonly productRepo: ProductRepo) {}
 
   async create(params: CreateProductDto, currentUser: IUser) {
     return this.productRepo.insert({
@@ -37,6 +41,16 @@ export class ProductService {
 
   listByCategory(params: ProductListByCategoryDto, user: IUser) {
     return this.productRepo.listByCategory(params, user);
+  }
+
+  getLastProducts() {
+    return this.productRepo.select(
+      { is_deleted: false },
+      {
+        limit: 10,
+        order_by: { column: 'created_at', order: 'asc', use: true },
+      },
+    );
   }
 
   findOne(id: string) {

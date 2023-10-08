@@ -47,6 +47,11 @@ export class ProductController {
     return this.productService.listByCategory(query, user);
   }
 
+  @Get('lasts')
+  getLastProducts() {
+    return this.productService.getLastProducts();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.productService.findOne(id);
