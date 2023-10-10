@@ -49,6 +49,21 @@ add column last_child bool default false;
 alter table products
 add column status smallint not null default 0;
 
+create table orders
+(
+    id            varchar(24) not null primary key,
+    product_id    varchar(24) not null,
+    constraint fk_product foreign key (product_id) references products (id),
+    count         smallint not null default 1,
+    client_data   jsonb not null,
+    price         money       not null,
+    seller_id     varchar(24) not null,
+    constraint fk_seller foreign key (seller_id) references users (id),
+    status        smallint    not null default 0,
+    is_deleted    bool        not null     default false,
+    created_at    timestamp with time zone default now()
+)
+
 SELECT    json_build_object('name', c0.name_uz, 'id', c0.id)  AS first,
 json_build_object('name', c1.name_uz, 'id', c1.id)  AS second,
 json_build_object('name', c2.name_uz, 'id', c2.id)  AS third
