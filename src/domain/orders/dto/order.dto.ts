@@ -11,7 +11,7 @@ export class CreateOrderDto {
   count: number;
 
   @ApiProperty()
-  @IsString()
+  @IsNumber()
   price: number;
 
   @ApiProperty()
