@@ -92,7 +92,7 @@ export class BaseRepo<T extends {}> extends KnexBaseRepo {
       query = query.offset(Number(options.offset));
     }
 
-    if (options.order_by.use) {
+    if (options.order_by?.use) {
       query = query.orderBy(options.order_by.column, options.order_by.order);
     }
 
