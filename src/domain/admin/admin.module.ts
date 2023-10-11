@@ -11,6 +11,7 @@ import { ProductModule } from '../product/product.module';
 import { AdminUserService } from './service/user.service';
 import { AdminUserRepo } from './repo/user.repo';
 import { AdminUserController } from './controller/user.controller';
+import { OrdersRepo } from '../orders/orders.repo';
 
 @Module({
   imports: [UserModule, ProductModule],
@@ -27,6 +28,7 @@ import { AdminUserController } from './controller/user.controller';
     AdminUserService,
     AdminUserRepo,
     JwtService,
+    OrdersRepo,
   ],
 })
 export class AdminModule {}
