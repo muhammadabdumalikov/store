@@ -13,10 +13,6 @@ export class CreateOrderDto {
   count: number;
 
   @ApiProperty()
-  @IsNumber()
-  price: number;
-
-  @ApiProperty()
   @IsString()
   @MaxLength(64)
   client_first_name: string;
