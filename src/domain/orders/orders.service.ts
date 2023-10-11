@@ -35,7 +35,11 @@ export class OrdersService {
 
   async orderList(params: OrderListDto, currentUser: IUser) {
     return await this.orderRepo.select(
-      { seller_id: currentUser.id, status: params.status, is_deleted: false },
+      {
+        seller_id: currentUser.id,
+        status: Number(params.status),
+        is_deleted: false,
+      },
       {
         limit: params.limit,
         offset: params.offset,
