@@ -29,7 +29,7 @@ export class OrdersService {
         phone: params.client_phone,
       },
       count: params.count,
-      price: product.price * params.count,
+      price: product.sale_price * params.count,
     });
   }
 
