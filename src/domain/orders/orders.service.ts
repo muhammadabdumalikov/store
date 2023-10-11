@@ -1,14 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { CreateOrderDto } from './dto/order.dto';
+import { CreateOrderDto, OrderListDto } from './dto/order.dto';
 import { OrdersRepo } from './orders.repo';
 import { ProductRepo } from '../product/product.repo';
 import { ProductNotFoundException } from 'src/errors/permission.error';
+// import { KnexService } from 'src/providers/knex.service';
+import { IUser } from '../user/interface/user.interface';
 
 @Injectable()
 export class OrdersService {
   constructor(
     private readonly orderRepo: OrdersRepo,
-    private readonly productRepo: ProductRepo,
+    private readonly productRepo: ProductRepo, // private readonly knexService: KnexService,
   ) {}
 
   async createOrder(params: CreateOrderDto) {
@@ -29,5 +31,16 @@ export class OrdersService {
       count: params.count,
       price: params.price,
     });
+  }
+
+  async orderList(params: OrderListDto, currentUser: IUser) {
+    return await this.orderRepo.select(
+      { seller_id: currentUser.id, status: params.status, is_deleted: false },
+      {
+        limit: params.limit,
+        offset: params.offset,
+        order_by: { column: 'created_at', order: 'desc', use: true },
+      },
+    );
   }
 }

@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsString, MaxLength } from 'class-validator';
+import { IsEnum, IsNumber, IsString, MaxLength } from 'class-validator';
+import { OrderStatus } from './order.enum';
+import { ListPageDto } from 'src/shared/dto/list.dto';
 
 export class CreateOrderDto {
   @ApiProperty()
@@ -28,4 +30,10 @@ export class CreateOrderDto {
   @IsString()
   @MaxLength(12)
   client_phone: string;
+}
+
+export class OrderListDto extends ListPageDto {
+  @ApiProperty()
+  @IsEnum(OrderStatus)
+  status?: OrderStatus;
 }
