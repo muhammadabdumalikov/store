@@ -8,7 +8,7 @@ export class FileRouterService {
     try {
       const {
         // originalname,
-        // mimetype,
+        mimetype,
         // size,
         buffer,
       } = file;
@@ -22,6 +22,7 @@ export class FileRouterService {
           Body: fileContent, // The actual file content
           Bucket: 'files',
           Key: filename, // The name of the file
+          ContentType: mimetype,
         })
         .promise();
       await data;
@@ -29,9 +30,11 @@ export class FileRouterService {
       return {
         sucess: true,
         file_id: filename,
-        file_url: `https://eu2.contabostorage.com/edb0e731910e4caeb60bc740fa32e2b7:${'files'}/${filename}`,
+        file_url: `https://usc1.contabostorage.com/6888fe4012724b1e990f016e5f9ef705:${'files'}/${filename}`,
       };
     } catch (error) {
+      console.log(error);
+      
       throw new InternalServerErrorException(error);
     }
   }
