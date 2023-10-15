@@ -6,12 +6,14 @@ import {
   Get,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { AdminProductService } from '../service/product.service';
 import { SetProductStatusDto } from '../dto/product-admin.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from 'src/guard/admin.guard';
 import { ProductService } from 'src/domain/product/product.service';
+import { OrderListDto } from 'src/domain/orders/dto/order.dto';
 
 @ApiTags('Admin')
 @ApiBearerAuth('authorization')
@@ -31,6 +33,11 @@ export class AdminProductController {
   @Get('list')
   async list() {
     return this.adminProductService.findAll();
+  }
+
+  @Get('order-list')
+  async orderList(@Query() params: OrderListDto) {
+    return this.adminProductService.orderList(params);
   }
 
   @Get(':id')
