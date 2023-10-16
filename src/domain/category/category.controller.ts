@@ -16,4 +16,9 @@ export class CategoryController {
   getAllParentCategories() {
     return this.categoryService.getAllParentCategories();
   }
+
+  @Get(':id')
+  getCategoryById(@Param('id') id: string) {
+    return this.categoryService.findOne(id);
+  }
 }
