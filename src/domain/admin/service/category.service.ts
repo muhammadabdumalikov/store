@@ -1,12 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { AdminCategoryRepo } from '../repo/category.repo';
-import { CreateCategoryDto, UpdateCategoryDto } from 'src/domain/admin/dto/category-admin.dto';
+import {
+  CreateCategoryDto,
+  UpdateCategoryDto,
+} from 'src/domain/admin/dto/category-admin.dto';
 import { isEmpty } from 'lodash';
 import { CategoryNotFoundException } from 'src/errors/permission.error';
+import { ListPageDto } from 'src/shared/dto/list.dto';
 
 @Injectable()
 export class AdminCategoryService {
-  constructor(private readonly adminCategoryRepo: AdminCategoryRepo) { }
+  constructor(private readonly adminCategoryRepo: AdminCategoryRepo) {}
 
   create(params: CreateCategoryDto) {
     return this.adminCategoryRepo.insert({
@@ -42,5 +46,12 @@ export class AdminCategoryService {
     }
 
     return this.adminCategoryRepo.softDelete(id);
+  }
+
+  async getAllCategories(params: ListPageDto) {
+    return this.adminCategoryRepo.select(
+      { is_deleted: false },
+      { limit: params.limit, offset: params.offset },
+    );
   }
 }

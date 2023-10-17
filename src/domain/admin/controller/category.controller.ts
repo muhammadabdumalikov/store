@@ -6,6 +6,8 @@ import {
   Delete,
   Param,
   Patch,
+  Get,
+  Query,
 } from '@nestjs/common';
 import { AdminCategoryService } from '../service/category.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -14,6 +16,7 @@ import {
   CreateCategoryDto,
   UpdateCategoryDto,
 } from 'src/domain/admin/dto/category-admin.dto';
+import { ListPageDto } from 'src/shared/dto/list.dto';
 
 @ApiTags('Admin')
 @UseGuards(AdminGuard)
@@ -25,6 +28,11 @@ export class AdminCategoryController {
   @Post()
   create(@Body() params: CreateCategoryDto) {
     return this.adminCategoryService.create(params);
+  }
+
+  @Get('all')
+  getAllCategories(@Query() params: ListPageDto) {
+    return this.adminCategoryService.getAllCategories(params);
   }
 
   @Patch(':id')
