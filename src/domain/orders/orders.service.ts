@@ -14,23 +14,54 @@ export class OrdersService {
   ) {}
 
   async createOrder(params: CreateOrderDto) {
-    const product = await this.productRepo.selectById(params.product_id);
+    const orderedProductArray = [];
 
-    if (!product) {
-      throw new ProductNotFoundException();
+    for await (const value of params.products) {
+      const product = await this.productRepo.selectById(value.product_id);
+
+      if (!product) {
+        throw new ProductNotFoundException();
+      }
+
+      orderedProductArray.push({
+        seller_id: product.owner_id,
+        product_id: value.product_id,
+        client_data: {
+          first_name: params.client_first_name,
+          last_name: params.client_last_name,
+          phone: params.client_phone,
+        },
+        count: value.count,
+        price: product.sale_price * value.count,
+      });
     }
 
-    return await this.orderRepo.insert({
-      seller_id: product.owner_id,
-      product_id: params.product_id,
-      client_data: {
-        first_name: params.client_first_name,
-        last_name: params.client_last_name,
-        phone: params.client_phone,
-      },
-      count: params.count,
-      price: product.sale_price * params.count,
+    // const dataForBatchInsert = params.products.map(async (value) => {
+    //   const product = await this.productRepo.selectById(value.product_id);
+
+    //   if (!product) {
+    //     throw new ProductNotFoundException();
+    //   }
+
+    //   return {
+    //     seller_id: product.owner_id,
+    //     product_id: value.product_id,
+    //     client_data: {
+    //       first_name: params.client_first_name,
+    //       last_name: params.client_last_name,
+    //       phone: params.client_phone,
+    //     },
+    //     count: value.count,
+    //     price: product.sale_price * value.count,
+    //   };
+    // });
+
+    await this.orderRepo.batchInsert(orderedProductArray, {
+      returning: ['*'],
+      chunkSize: 500,
     });
+
+    return { success: true };
   }
 
   async orderList(params: OrderListDto, currentUser: IUser) {

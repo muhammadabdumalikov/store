@@ -53,11 +53,11 @@ create table orders
 (
     id         varchar(24) not null primary key,
     product_id    varchar(64) not null,
-    count   varchar(64) not null,
-    name_ru    varchar(64) not null,
-    image      text        null,
-    parent_id  varchar(24),
-    constraint fk_parent_category foreign key (parent_id) references category (id),
+    count   smallint not null default 1,
     is_deleted bool        not null     default false,
-    created_at timestamp with time zone default now()
+    created_at timestamp with time zone default now(),
+    client_data jsonb not null,
+    price integer not null,
+    seller_id varchar(24) not null,
+    status smallint not null default 0
 );
