@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
   CreateProductDto,
   ProductListByCategoryDto,
+  SearchDto,
   UpdateProductDto,
 } from './dto/product.dto';
 import { ProductRepo } from './product.repo';
@@ -95,5 +96,9 @@ export class ProductService {
     await this.productRepo.softDelete(id);
 
     return { success: true };
+  }
+
+  async searchProductByName(params: SearchDto) {
+    return this.productRepo.searchProductByName(params);
   }
 }

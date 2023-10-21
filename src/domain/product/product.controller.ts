@@ -13,6 +13,7 @@ import { ProductService } from './product.service';
 import {
   CreateProductDto,
   ProductListByCategoryDto,
+  SearchDto,
   UpdateProductDto,
 } from './dto/product.dto';
 import { AuthGuard } from 'src/guard/auth.guard';
@@ -50,6 +51,11 @@ export class ProductController {
   @Get('lasts')
   getLastProducts() {
     return this.productService.getLastProducts();
+  }
+
+  @Get('search')
+  searchProductByName(@Query() params: SearchDto) {
+    return this.productService.searchProductByName(params);
   }
 
   @Get(':id')

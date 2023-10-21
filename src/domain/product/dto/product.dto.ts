@@ -81,3 +81,10 @@ export class ProductListByCategoryDto extends ListPageDto {
   @IsOptional()
   to_price?: number;
 }
+
+export class SearchDto {
+  @ApiPropertyOptional()
+  @IsString()
+  @IsOptional()
+  name?: string;
+}
