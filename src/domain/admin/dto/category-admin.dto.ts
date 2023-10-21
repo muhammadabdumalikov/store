@@ -1,17 +1,20 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class CreateCategoryDto {
   @ApiProperty()
   @IsString()
+  @MaxLength(64)
   name_uz: string;
 
   @ApiProperty()
   @IsString()
+  @MaxLength(64)
   name_lat: string;
 
   @ApiProperty()
   @IsString()
+  @MaxLength(64)
   name_ru: string;
 
   @ApiProperty()
