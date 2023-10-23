@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto, OrderListDto } from './dto/order.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -24,5 +33,15 @@ export class OrdersController {
     @CurrentUser() currentUser: IUser,
   ) {
     return this.ordersService.orderList(params, currentUser);
+  }
+
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth('authorization')
+  @Delete(':id')
+  async deleteOrderFromList(
+    @Param('id') id: string,
+    @CurrentUser() currentUser: IUser,
+  ) {
+    return this.ordersService.deleteFromList(id, currentUser);
   }
 }

@@ -119,6 +119,13 @@ export class BaseRepo<T extends {}> extends KnexBaseRepo {
     return query;
   }
 
+  update(where, values): Knex.QueryBuilder<T> {
+    return this.knexService
+      .instance(this._tableName)
+      .update(values)
+      .where(where);
+  }
+
   updateById(id: string, value: T, returning = ['*']): Knex.QueryBuilder<T> {
     return this.knexService
       .instance(this._tableName)

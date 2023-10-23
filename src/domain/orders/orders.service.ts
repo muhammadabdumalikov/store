@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateOrderDto, OrderListDto } from './dto/order.dto';
 import { OrdersRepo } from './orders.repo';
 import { ProductRepo } from '../product/product.repo';
 import { ProductNotFoundException } from 'src/errors/permission.error';
 // import { KnexService } from 'src/providers/knex.service';
 import { IUser } from '../user/interface/user.interface';
+import { isEmpty } from 'lodash';
 
 @Injectable()
 export class OrdersService {
@@ -77,5 +78,29 @@ export class OrdersService {
         order_by: { column: 'created_at', order: 'desc', use: true },
       },
     );
+  }
+
+  async deleteFromList(id: string, currentUser: IUser) {
+    const order = await this.orderRepo.select({
+      id: id,
+      seller_id: currentUser.id,
+      is_deleted: false,
+    });
+
+    if (isEmpty(order)) {
+      throw new NotFoundException('Order not found!');
+    }
+
+    await this.orderRepo.update(
+      {
+        id: id,
+        seller_id: currentUser.id,
+      },
+      {
+        is_deleted: true,
+      },
+    );
+
+    return { success: true };
   }
 }
