@@ -12,10 +12,14 @@ import {
   UserHasNotOwnerPermissionException,
 } from 'src/errors/permission.error';
 import { isEmpty } from 'lodash';
+import { AdsRepo } from './ads.repo';
 
 @Injectable()
 export class ProductService {
-  constructor(private readonly productRepo: ProductRepo) {}
+  constructor(
+    private readonly productRepo: ProductRepo,
+    private readonly adsRepo: AdsRepo,
+  ) {}
 
   async create(params: CreateProductDto, currentUser: IUser) {
     return this.productRepo.insert({
@@ -100,5 +104,9 @@ export class ProductService {
 
   async searchProductByName(params: SearchDto) {
     return this.productRepo.searchProductByName(params);
+  }
+
+  async getlastAds() {
+    return this.adsRepo.getLastAds();
   }
 }

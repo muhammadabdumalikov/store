@@ -1,4 +1,12 @@
-import { Controller, Post, Body, UseGuards, Get, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Get,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from 'src/guard/admin.guard';
 import { AdminUserService } from '../service/user.service';
@@ -13,7 +21,7 @@ export class AdminUserController {
   constructor(
     private readonly adminUserService: AdminUserService,
     private readonly userService: UserService,
-  ) { }
+  ) {}
 
   @Post('set-status')
   async setStatus(@Body() params: SetUserStatusDto) {

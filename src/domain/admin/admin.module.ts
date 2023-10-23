@@ -12,6 +12,9 @@ import { AdminUserService } from './service/user.service';
 import { AdminUserRepo } from './repo/user.repo';
 import { AdminUserController } from './controller/user.controller';
 import { OrdersRepo } from '../orders/orders.repo';
+import { AdminAdvertisementController } from './controller/ads.controller';
+import { AdminAdvertisementService } from './service/ads.service';
+import { AdminAdvertisementRepo } from './repo/ads.repo';
 
 @Module({
   imports: [UserModule, ProductModule],
@@ -19,6 +22,7 @@ import { OrdersRepo } from '../orders/orders.repo';
     AdminCategoryController,
     AdminProductController,
     AdminUserController,
+    AdminAdvertisementController,
   ],
   providers: [
     AdminCategoryService,
@@ -29,6 +33,8 @@ import { OrdersRepo } from '../orders/orders.repo';
     AdminUserRepo,
     JwtService,
     OrdersRepo,
+    AdminAdvertisementService,
+    AdminAdvertisementRepo,
   ],
 })
 export class AdminModule {}

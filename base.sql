@@ -61,3 +61,13 @@ create table orders
     seller_id varchar(24) not null,
     status smallint not null default 0
 );
+
+create table advertisements
+(
+    id         varchar(24) not null primary key,
+    title      varchar(255),
+    image          text        null,
+    link          text        null,
+    is_deleted bool        not null     default false,
+    created_at timestamp with time zone default now(),
+);

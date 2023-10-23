@@ -58,6 +58,11 @@ export class ProductController {
     return this.productService.searchProductByName(params);
   }
 
+  @Get('get-ads')
+  getLastAds() {
+    return this.productService.getlastAds();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.productService.findOne(id);

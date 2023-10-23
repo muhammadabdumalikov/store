@@ -3,7 +3,6 @@ import { BaseRepo } from 'src/providers/base-dao';
 import { ProductListByCategoryDto, SearchDto } from './dto/product.dto';
 import { IUser } from '../user/interface/user.interface';
 import { SortType } from './enum/product.enum';
-import { isEmpty } from 'lodash';
 import { krillToLatin, latinToKrill } from 'src/shared/utils/translate';
 
 @Injectable()
