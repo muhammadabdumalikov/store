@@ -15,7 +15,7 @@ export class AdsRepo extends BaseRepo<any> {
       .from(this._tableName)
       .whereRaw('is_deleted is not true')
       .orderBy('created_at', 'desc')
-      .first();
+      .limit(5);
 
     return await query;
   }

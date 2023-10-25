@@ -5,7 +5,6 @@ import { isEmpty } from 'lodash';
 import { ProductNotFoundException } from 'src/errors/permission.error';
 import { OrdersRepo } from 'src/domain/orders/orders.repo';
 import { OrderListDto } from 'src/domain/orders/dto/order.dto';
-import { IUser } from 'src/domain/user/interface/user.interface';
 import { ListPageDto } from 'src/shared/dto/list.dto';
 
 @Injectable()
