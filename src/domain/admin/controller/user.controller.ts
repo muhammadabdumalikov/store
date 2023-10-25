@@ -6,12 +6,14 @@ import {
   Get,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from 'src/guard/admin.guard';
 import { AdminUserService } from '../service/user.service';
 import { UserService } from 'src/domain/user/user.service';
 import { SetUserStatusDto } from '../dto/user-admin.dto';
+import { ListPageDto } from 'src/shared/dto/list.dto';
 
 @ApiTags('Admin')
 @ApiBearerAuth('authorization')
@@ -29,8 +31,8 @@ export class AdminUserController {
   }
 
   @Get('list')
-  async list() {
-    return this.adminUserService.findAll();
+  async list(@Query() params: ListPageDto) {
+    return this.adminUserService.findAll(params);
   }
 
   @Get(':id')

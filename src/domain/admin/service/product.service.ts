@@ -6,6 +6,7 @@ import { ProductNotFoundException } from 'src/errors/permission.error';
 import { OrdersRepo } from 'src/domain/orders/orders.repo';
 import { OrderListDto } from 'src/domain/orders/dto/order.dto';
 import { IUser } from 'src/domain/user/interface/user.interface';
+import { ListPageDto } from 'src/shared/dto/list.dto';
 
 @Injectable()
 export class AdminProductService {
@@ -20,8 +21,17 @@ export class AdminProductService {
     });
   }
 
-  findAll() {
-    return this.adminProductRepo.select({ is_deleted: false }, { limit: 10 });
+  findAll(params: ListPageDto) {
+    return this.adminProductRepo.select(
+      {
+        is_deleted: false,
+      },
+      {
+        limit: params.limit,
+        offset: params.offset,
+        order_by: { column: 'created_at', order: 'desc', use: true },
+      },
+    );
   }
 
   async delete(id: string) {

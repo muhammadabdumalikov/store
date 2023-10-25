@@ -14,6 +14,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from 'src/guard/admin.guard';
 import { ProductService } from 'src/domain/product/product.service';
 import { OrderListDto } from 'src/domain/orders/dto/order.dto';
+import { ListPageDto } from 'src/shared/dto/list.dto';
 
 @ApiTags('Admin')
 @ApiBearerAuth('authorization')
@@ -31,8 +32,8 @@ export class AdminProductController {
   }
 
   @Get('list')
-  async list() {
-    return this.adminProductService.findAll();
+  async list(@Query() params: ListPageDto) {
+    return this.adminProductService.findAll(params);
   }
 
   @Get('order-list')
