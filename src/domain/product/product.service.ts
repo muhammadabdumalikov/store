@@ -13,6 +13,7 @@ import {
 } from 'src/errors/permission.error';
 import { isEmpty } from 'lodash';
 import { AdsRepo } from './ads.repo';
+import { ListPageDto } from 'src/shared/dto/list.dto';
 
 @Injectable()
 export class ProductService {
@@ -37,10 +38,10 @@ export class ProductService {
     });
   }
 
-  getUserProducts(user: IUser) {
+  getUserProducts(params: ListPageDto, user: IUser) {
     return this.productRepo.select(
       { is_deleted: false, owner_id: user.id },
-      { limit: 10 },
+      { limit: params.limit, offset: params.offset },
     );
   }
 

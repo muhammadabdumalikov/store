@@ -20,6 +20,7 @@ import { AuthGuard } from 'src/guard/auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from 'src/decorator/current-user.decorator';
 import { IUser } from '../user/interface/user.interface';
+import { ListPageDto } from 'src/shared/dto/list.dto';
 
 @ApiTags('Product')
 @Controller('product')
@@ -36,8 +37,8 @@ export class ProductController {
   @UseGuards(AuthGuard)
   @ApiBearerAuth('authorization')
   @Get('my')
-  getUserProducts(@CurrentUser() user: IUser) {
-    return this.productService.getUserProducts(user);
+  getUserProducts(@Query() params: ListPageDto, @CurrentUser() user: IUser) {
+    return this.productService.getUserProducts(params, user);
   }
 
   @Get('list-by-category')
