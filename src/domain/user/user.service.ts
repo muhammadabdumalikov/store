@@ -4,6 +4,10 @@ import { UserRepo } from './user.repo';
 import { UserRoles, UserStatus } from './enum/user.enum';
 import { IUser } from './interface/user.interface';
 import { EmailConfirmationService } from './email-confirmaton.service';
+import {
+  EmailAlreadyRegistered,
+  PhoneAlreadyRegistered,
+} from 'src/errors/permission.error';
 
 @Injectable()
 export class UserService {
@@ -13,12 +17,18 @@ export class UserService {
   ) {}
 
   async signUp(params: CreateUserDto) {
-    const hasUser: IUser = await this.userRepo.selectByPhone(params.phone);
+    const hasPhone: IUser = await this.userRepo.selectByPhone(params.phone);
 
-    if (hasUser) {
-      return { code: 110 };
+    if (hasPhone) {
+      throw new PhoneAlreadyRegistered();
     }
-    
+
+    const hasEmail: IUser = await this.userRepo.selectByEmail(params.email);
+
+    if (hasEmail) {
+      throw new EmailAlreadyRegistered();
+    }
+
     const otp = Math.floor(10000 + Math.random() * 90000);
 
     const [user]: [IUser] = await this.userRepo.insert({
@@ -28,6 +38,7 @@ export class UserService {
       role: UserRoles.SELLER,
       otp: otp,
       status: UserStatus.REGISTERED,
+      email: params.email,
     });
 
     await this.emailService.sendVerificationLink(params.email, otp);

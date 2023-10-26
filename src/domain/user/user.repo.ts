@@ -14,4 +14,12 @@ export class UserRepo extends BaseRepo<any> {
       .where('phone', phone)
       .first();
   }
+
+  selectByEmail(email: string, columns = ['*']) {
+    return this.knex
+      .select(columns)
+      .from(this._tableName)
+      .where('email', email)
+      .first();
+  }
 }
