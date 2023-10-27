@@ -17,13 +17,13 @@ export class UserNotFoundException extends NotFoundException {
   }
 }
 
-export class EmailAlreadyRegistered extends NotFoundException {
+export class EmailAlreadyRegistered extends BadRequestException {
   constructor() {
     super({ code: `${ErrorCodes.EMAIL_ALREADY_REGISTERED}` });
   }
 }
 
-export class PhoneAlreadyRegistered extends NotFoundException {
+export class PhoneAlreadyRegistered extends BadRequestException {
   constructor() {
     super({ code: `${ErrorCodes.PHONE_ALREADY_REGISTERED}` });
   }

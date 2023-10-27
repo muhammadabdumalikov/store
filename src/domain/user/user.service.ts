@@ -17,33 +17,39 @@ export class UserService {
   ) {}
 
   async signUp(params: CreateUserDto) {
-    const hasPhone: IUser = await this.userRepo.selectByPhone(params.phone);
+    return this.userRepo.knex
+      .transaction(async () => {
+        const hasPhone: IUser = await this.userRepo.selectByPhone(params.phone);
 
-    if (hasPhone) {
-      throw new PhoneAlreadyRegistered();
-    }
+        if (hasPhone) {
+          throw new PhoneAlreadyRegistered();
+        }
 
-    const hasEmail: IUser = await this.userRepo.selectByEmail(params.email);
+        const hasEmail: IUser = await this.userRepo.selectByEmail(params.email);
 
-    if (hasEmail) {
-      throw new EmailAlreadyRegistered();
-    }
+        if (hasEmail) {
+          throw new EmailAlreadyRegistered();
+        }
 
-    const otp = Math.floor(10000 + Math.random() * 90000);
+        const otp = Math.floor(10000 + Math.random() * 90000);
 
-    const [user]: [IUser] = await this.userRepo.insert({
-      phone: params.phone,
-      first_name: params.first_name,
-      last_name: params.last_name,
-      role: UserRoles.SELLER,
-      otp: otp,
-      status: UserStatus.REGISTERED,
-      email: params.email,
-    });
+        const [user]: [IUser] = await this.userRepo.insert({
+          phone: params.phone,
+          first_name: params.first_name,
+          last_name: params.last_name,
+          role: UserRoles.SELLER,
+          otp: otp,
+          status: UserStatus.REGISTERED,
+          email: params.email,
+        });
 
-    await this.emailService.sendVerificationLink(params.email, otp);
+        await this.emailService.sendVerificationLink(params.email, otp);
 
-    return { otp: user.otp, phone: user.phone };
+        return { otp: user.otp, phone: user.phone };
+      })
+      .then((data) => {
+        return data;
+      });
   }
 
   findAll() {
