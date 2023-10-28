@@ -140,4 +140,12 @@ export class BaseRepo<T extends {}> extends KnexBaseRepo {
       .update({ is_deleted: true })
       .where('id', id);
   }
+
+  selectByEmail(email: string, columns = ['*']) {
+    return this.knex
+      .select(columns)
+      .from(this._tableName)
+      .where('email', email)
+      .first();
+  }
 }

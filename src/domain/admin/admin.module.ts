@@ -15,10 +15,12 @@ import { OrdersRepo } from '../orders/orders.repo';
 import { AdminAdvertisementController } from './controller/ads.controller';
 import { AdminAdvertisementService } from './service/ads.service';
 import { AdminAdvertisementRepo } from './repo/ads.repo';
+import { SuperAdminController } from './controller/super-admin.controller';
 
 @Module({
   imports: [UserModule, ProductModule],
   controllers: [
+    SuperAdminController,
     AdminCategoryController,
     AdminProductController,
     AdminUserController,

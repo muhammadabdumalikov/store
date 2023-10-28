@@ -4,10 +4,7 @@ import { UserRepo } from './user.repo';
 import { UserRoles, UserStatus } from './enum/user.enum';
 import { IUser } from './interface/user.interface';
 import { EmailConfirmationService } from './email-confirmaton.service';
-import {
-  EmailAlreadyRegistered,
-  PhoneAlreadyRegistered,
-} from 'src/errors/permission.error';
+import { EmailAlreadyRegistered } from 'src/errors/permission.error';
 
 @Injectable()
 export class UserService {

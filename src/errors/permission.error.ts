@@ -29,7 +29,7 @@ export class PhoneAlreadyRegistered extends BadRequestException {
   }
 }
 
-export class IncorrectOtpException extends NotFoundException {
+export class IncorrectOtpException extends BadRequestException {
   constructor() {
     super({ code: `${ErrorCodes.INCORRECT_OTP}` });
   }

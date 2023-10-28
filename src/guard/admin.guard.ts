@@ -42,7 +42,7 @@ export class AdminGuard implements CanActivate {
       throw new UnauthorizedException();
     }
 
-    if (user.role !== UserRoles.ADMIN && false) {
+    if (user.role !== UserRoles.ADMIN) {
       throw new UserHasNotPermissionException();
     }
 

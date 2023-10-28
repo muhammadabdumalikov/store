@@ -49,9 +49,6 @@ export class AuthService {
 
     await this.emailService.sendVerificationLink(params.email, otp);
 
-    return this.jwtService.signAsync(
-      { id: user.id },
-      { privateKey: 'store-app' },
-    );
+    return { message: 'Check your email for OTP!' };
   }
 }
