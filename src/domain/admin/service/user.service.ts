@@ -63,4 +63,18 @@ export class AdminUserService {
 
     return user;
   }
+
+  findAllAdmins(params: ListPageDto) {
+    return this.adminUserRepo.select(
+      {
+        is_deleted: false,
+        role: UserRoles.ADMIN,
+      },
+      {
+        limit: params.limit,
+        offset: params.offset,
+        order_by: { column: 'created_at', order: 'desc', use: true },
+      },
+    );
+  }
 }
