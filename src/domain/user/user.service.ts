@@ -19,12 +19,6 @@ export class UserService {
   async signUp(params: CreateUserDto) {
     return this.userRepo.knex
       .transaction(async () => {
-        const hasPhone: IUser = await this.userRepo.selectByPhone(params.phone);
-
-        if (hasPhone) {
-          throw new PhoneAlreadyRegistered();
-        }
-
         const hasEmail: IUser = await this.userRepo.selectByEmail(params.email);
 
         if (hasEmail) {
