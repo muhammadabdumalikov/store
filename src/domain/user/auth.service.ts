@@ -28,10 +28,13 @@ export class AuthService {
       throw new IncorrectOtpException();
     }
 
-    return this.jwtService.signAsync(
-      { id: user.id },
-      { privateKey: 'store-app' },
-    );
+    return {
+      access_token: this.jwtService.signAsync(
+        { id: user.id },
+        { privateKey: 'store-app' },
+      ),
+      role: user.role,
+    };
   }
 
   async login(params: UserLoginDto) {
