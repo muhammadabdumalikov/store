@@ -29,7 +29,7 @@ export class AuthService {
     }
 
     return {
-      access_token: this.jwtService.signAsync(
+      access_token: await this.jwtService.signAsync(
         { id: user.id },
         { privateKey: 'store-app' },
       ),
