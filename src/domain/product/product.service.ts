@@ -38,11 +38,7 @@ export class ProductService {
     });
   }
 
-<<<<<<< HEAD
-  getUserProducts(user: IUser) {
-=======
   getUserProducts(params: ListPageDto, user: IUser) {
->>>>>>> ff9a6d2e939c63ddfcf133d4c4270cec4b01ae3f
     return this.productRepo.select(
       { is_deleted: false, owner_id: user.id },
       { limit: params.limit, offset: params.offset },

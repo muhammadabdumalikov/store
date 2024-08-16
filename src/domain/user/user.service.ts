@@ -14,19 +14,9 @@ export class UserService {
   ) {}
 
   async signUp(params: CreateUserDto) {
-<<<<<<< HEAD
-    const hasUser: IUser = await this.userRepo.selectByPhone(params.phone);
-
-    if (hasUser) {
-      return { code: 110 };
-    }
-    
-    const otp = Math.floor(10000 + Math.random() * 90000);
-=======
     return this.userRepo.knex
       .transaction(async () => {
         const hasEmail: IUser = await this.userRepo.selectByEmail(params.email);
->>>>>>> ff9a6d2e939c63ddfcf133d4c4270cec4b01ae3f
 
         if (hasEmail) {
           throw new EmailAlreadyRegistered();
