@@ -4,7 +4,7 @@ import { BaseRepo } from 'src/providers/base-dao';
 @Injectable()
 export class CategoryRepo extends BaseRepo<any> {
   constructor() {
-    super('category');
+    super('categories');
   }
 
   async getWithChildren(parent_id: string) {
@@ -118,10 +118,9 @@ export class CategoryRepo extends BaseRepo<any> {
     const knex = this.knexService.instance;
 
     const query = knex
-      .select(['c.id', 'c.name_uz', 'c.name_ru', 'c.name_lat', 'c.image'])
-      .from('category as c')
-      .where('is_deleted', false)
-      .where('parent_id', null);
+      .select(['c.id', 'c.name_uz', 'c.name_ru'])
+      .from('categories as c')
+      .where('is_deleted', false);
 
     return query;
   }

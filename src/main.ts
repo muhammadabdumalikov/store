@@ -3,9 +3,16 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 
+const HTTP_PORT = process.env.HTTP_PORT || 3001;
+
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule, {
+    cors: {
+      origin: '*',
+    },
+  });
   app.useGlobalPipes(new ValidationPipe());
+  app.setGlobalPrefix('api');
 
   const config = new DocumentBuilder()
     .setTitle('Store API')
@@ -24,8 +31,10 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
 
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('swagger', app, document);
 
-  await app.listen(3000);
+  await app.listen(HTTP_PORT, () =>
+    console.log(`APPLICATION IS RUNNING ON ${HTTP_PORT} PORT`),
+  );
 }
 bootstrap();
