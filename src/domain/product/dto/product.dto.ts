@@ -5,6 +5,7 @@ import {
   IsObject,
   IsOptional,
   IsString,
+  MaxLength,
 } from 'class-validator';
 import { ListPageDto } from 'src/shared/dto/list.dto';
 import { SortType } from '../enum/product.enum';
@@ -12,14 +13,17 @@ import { SortType } from '../enum/product.enum';
 export class CreateProductDto {
   @ApiProperty()
   @IsString()
+  @MaxLength(64)
   name_uz: string;
 
   @ApiProperty()
   @IsString()
+  @MaxLength(64)
   name_lat: string;
 
   @ApiProperty()
   @IsString()
+  @MaxLength(64)
   name_ru: string;
 
   @ApiProperty()
@@ -76,4 +80,11 @@ export class ProductListByCategoryDto extends ListPageDto {
   // @IsNumber()
   @IsOptional()
   to_price?: number;
+}
+
+export class SearchDto {
+  @ApiPropertyOptional()
+  @IsString()
+  @IsOptional()
+  name?: string;
 }

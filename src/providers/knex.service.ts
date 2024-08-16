@@ -1,4 +1,4 @@
-// import knex, { Knex } from "knex";
+// import knex, { Knex } from 'knex';
 
 // export class KnexService {
 //   instance: Knex;
@@ -7,16 +7,16 @@
 //     this.instance = knex({
 //       client: 'postgresql',
 //       connection: {
-//         host: 'rain.db.elephantsql.com',
-//         database: 'jsskmqpe',
-//         password: 'IIWPSMjS-Y4bxIR5F7MqRUhDm0eAnVxq',
-//         user: 'jsskmqpe',
+//         host: 'john.db.elephantsql.com',
+//         database: 'zrdldrse',
+//         password: 'vW-QMd6vea2sG9HRJxwexLS8heaQVX97',
+//         user: 'zrdldrse',
 //       },
 //       pool: {
 //         min: 1,
 //         max: 3,
 //       },
-//     })
+//     });
 //   }
 // }
 
@@ -29,10 +29,11 @@ export class KnexService {
     this.instance = knex({
       client: 'postgresql',
       connection: {
-        host: 'localhost',
-        database: 'store',
-        password: '5432',
+        host: '45.10.154.95',
+        database: 'stroymarket',
+        password: '4324',
         user: 'postgres',
+        port: 5433,
       },
       pool: {
         min: 2,

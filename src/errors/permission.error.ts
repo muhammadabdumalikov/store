@@ -17,7 +17,19 @@ export class UserNotFoundException extends NotFoundException {
   }
 }
 
-export class IncorrectOtpException extends NotFoundException {
+export class EmailAlreadyRegistered extends BadRequestException {
+  constructor() {
+    super({ code: `${ErrorCodes.EMAIL_ALREADY_REGISTERED}` });
+  }
+}
+
+export class PhoneAlreadyRegistered extends BadRequestException {
+  constructor() {
+    super({ code: `${ErrorCodes.PHONE_ALREADY_REGISTERED}` });
+  }
+}
+
+export class IncorrectOtpException extends BadRequestException {
   constructor() {
     super({ code: `${ErrorCodes.INCORRECT_OTP}` });
   }

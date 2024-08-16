@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { BaseRepo } from 'src/providers/base-dao';
 
 @Injectable()
-export class AdminCategoryRepo extends BaseRepo<any> {
+export class OrdersRepo extends BaseRepo<any> {
   constructor() {
-    super('categories');
+    super('orders');
   }
 }

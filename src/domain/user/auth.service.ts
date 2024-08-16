@@ -7,16 +7,18 @@ import {
   UserNotFoundException,
 } from 'src/errors/permission.error';
 import { IUser } from './interface/user.interface';
+import { EmailConfirmationService } from './email-confirmaton.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly userRepo: UserRepo,
+    private readonly emailService: EmailConfirmationService,
   ) {}
 
   async confirmOtp(params: ConfirmOtpDto) {
-    const user: IUser = await this.userRepo.selectByPhone(params.phone);
+    const user: IUser = await this.userRepo.selectByEmail(params.email);
 
     if (!user) {
       throw new UserNotFoundException();
@@ -26,22 +28,30 @@ export class AuthService {
       throw new IncorrectOtpException();
     }
 
-    return this.jwtService.signAsync(
-      { id: user.id },
-      { privateKey: 'store-app' },
-    );
+    return {
+      access_token: await this.jwtService.signAsync(
+        { id: user.id },
+        { privateKey: 'store-app' },
+      ),
+      role: user.role,
+    };
   }
 
   async login(params: UserLoginDto) {
-    const user: IUser = await this.userRepo.selectByPhone(params.phone);
+    const user: IUser = await this.userRepo.selectByEmail(params.email);
 
     if (!user) {
       throw new UserNotFoundException();
     }
 
-    return this.jwtService.signAsync(
-      { id: user.id },
-      { privateKey: 'store-app' },
-    );
+    const otp = Math.floor(10000 + Math.random() * 90000);
+
+    await this.userRepo.updateById(user.id, {
+      otp: otp,
+    });
+
+    await this.emailService.sendVerificationLink(params.email, otp);
+
+    return { message: 'Check your email for OTP!' };
   }
 }

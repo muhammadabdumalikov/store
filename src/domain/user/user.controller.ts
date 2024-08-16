@@ -8,7 +8,12 @@ import {
   Delete,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { ConfirmOtpDto, CreateUserDto, UpdateUserDto, UserLoginDto } from './dto/user.dto';
+import {
+  ConfirmOtpDto,
+  CreateUserDto,
+  UpdateUserDto,
+  UserLoginDto,
+} from './dto/user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 

@@ -4,6 +4,7 @@ import { UserRepo } from './user.repo';
 import { UserRoles, UserStatus } from './enum/user.enum';
 import { IUser } from './interface/user.interface';
 import { EmailConfirmationService } from './email-confirmaton.service';
+import { EmailAlreadyRegistered } from 'src/errors/permission.error';
 
 @Injectable()
 export class UserService {
@@ -13,6 +14,7 @@ export class UserService {
   ) {}
 
   async signUp(params: CreateUserDto) {
+<<<<<<< HEAD
     const hasUser: IUser = await this.userRepo.selectByPhone(params.phone);
 
     if (hasUser) {
@@ -20,19 +22,35 @@ export class UserService {
     }
     
     const otp = Math.floor(10000 + Math.random() * 90000);
+=======
+    return this.userRepo.knex
+      .transaction(async () => {
+        const hasEmail: IUser = await this.userRepo.selectByEmail(params.email);
+>>>>>>> ff9a6d2e939c63ddfcf133d4c4270cec4b01ae3f
 
-    const [user]: [IUser] = await this.userRepo.insert({
-      phone: params.phone,
-      first_name: params.first_name,
-      last_name: params.last_name,
-      role: UserRoles.SELLER,
-      otp: otp,
-      status: UserStatus.REGISTERED,
-    });
+        if (hasEmail) {
+          throw new EmailAlreadyRegistered();
+        }
 
-    await this.emailService.sendVerificationLink(params.email, otp);
+        const otp = Math.floor(10000 + Math.random() * 90000);
 
-    return { otp: user.otp, phone: user.phone };
+        const [user]: [IUser] = await this.userRepo.insert({
+          phone: params.phone,
+          first_name: params.first_name,
+          last_name: params.last_name,
+          role: UserRoles.SELLER,
+          otp: otp,
+          status: UserStatus.REGISTERED,
+          email: params.email,
+        });
+
+        await this.emailService.sendVerificationLink(params.email, otp);
+
+        return { otp: user.otp, phone: user.phone };
+      })
+      .then((data) => {
+        return data;
+      });
   }
 
   findAll() {

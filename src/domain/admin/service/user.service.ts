@@ -2,11 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { AdminUserRepo } from '../repo/user.repo';
 import { SetUserStatusDto } from '../dto/user-admin.dto';
 import { isEmpty } from 'lodash';
-import { UserNotFoundException } from 'src/errors/permission.error';
+import { EmailAlreadyRegistered, UserNotFoundException } from 'src/errors/permission.error';
+import { ListPageDto } from 'src/shared/dto/list.dto';
+import { CreateUserDto } from 'src/domain/user/dto/user.dto';
+import { UserRoles, UserStatus } from 'src/domain/user/enum/user.enum';
+import { IUser } from 'src/domain/user/interface/user.interface';
 
 @Injectable()
 export class AdminUserService {
-  constructor(private readonly adminUserRepo: AdminUserRepo) { }
+  constructor(private readonly adminUserRepo: AdminUserRepo) {}
 
   setStatus(params: SetUserStatusDto) {
     return this.adminUserRepo.updateById(params.user_id, {
@@ -14,8 +18,17 @@ export class AdminUserService {
     });
   }
 
-  findAll() {
-    return this.adminUserRepo.select({ is_deleted: false }, { limit: 10 });
+  findAll(params: ListPageDto) {
+    return this.adminUserRepo.select(
+      {
+        is_deleted: false,
+      },
+      {
+        limit: params.limit,
+        offset: params.offset,
+        order_by: { column: 'created_at', order: 'desc', use: true },
+      },
+    );
   }
 
   async delete(id: string) {
@@ -28,5 +41,40 @@ export class AdminUserService {
     await this.adminUserRepo.softDelete(id);
 
     return { success: true };
+  }
+
+  async createSuperAdmin(params: CreateUserDto) {
+    const hasEmail: IUser = await this.adminUserRepo.selectByEmail(
+      params.email,
+    );
+
+    if (hasEmail) {
+      throw new EmailAlreadyRegistered();
+    }
+
+    const [user]: [IUser] = await this.adminUserRepo.insert({
+      phone: params.phone,
+      first_name: params.first_name,
+      last_name: params.last_name,
+      role: UserRoles.ADMIN,
+      status: UserStatus.ACTIVE,
+      email: params.email,
+    });
+
+    return user;
+  }
+
+  findAllAdmins(params: ListPageDto) {
+    return this.adminUserRepo.select(
+      {
+        is_deleted: false,
+        role: UserRoles.ADMIN,
+      },
+      {
+        limit: params.limit,
+        offset: params.offset,
+        order_by: { column: 'created_at', order: 'desc', use: true },
+      },
+    );
   }
 }

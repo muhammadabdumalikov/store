@@ -11,7 +11,7 @@ export default class EmailService {
       service: 'gmail',
       auth: {
         user: 'burakali424@gmail.com',
-        pass: 'yhet gjak pafj tfpf',
+        pass: 'qeyo lcti lgvm fmzq',
       },
     });
   }
