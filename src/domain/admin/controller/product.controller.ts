@@ -31,15 +31,15 @@ export class AdminProductController {
     return this.adminProductService.setStatus(params);
   }
 
-  @Get('list')
-  async list(@Query() params: ListPageDto) {
-    return this.adminProductService.findAll(params);
-  }
+  // @Get('list')
+  // async list(@Query() params: ListPageDto) {
+  //   return this.adminProductService.findAll(params);
+  // }
 
-  @Get('order-list')
-  async orderList(@Query() params: OrderListDto) {
-    return this.adminProductService.orderList(params);
-  }
+  // @Get('order-list')
+  // async orderList(@Query() params: OrderListDto) {
+  //   return this.adminProductService.orderList(params);
+  // }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {

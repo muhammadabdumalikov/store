@@ -34,12 +34,12 @@ export class ProductController {
     return this.productService.create(params, currentUser);
   }
 
-  @UseGuards(AuthGuard)
-  @ApiBearerAuth('authorization')
-  @Get('my')
-  getUserProducts(@Query() params: ListPageDto, @CurrentUser() user: IUser) {
-    return this.productService.getUserProducts(params, user);
-  }
+  // @UseGuards(AuthGuard)
+  // @ApiBearerAuth('authorization')
+  // @Get('my')
+  // getUserProducts(@Query() params: ListPageDto, @CurrentUser() user: IUser) {
+  //   return this.productService.getUserProducts(params, user);
+  // }
 
   @Get('list-by-category')
   listByCategory(

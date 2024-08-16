@@ -27,10 +27,10 @@ export class AdminAdvertisementController {
     return this.adminAdsService.create(params);
   }
 
-  @Get('all')
-  getAllCategories(@Query() params: ListPageDto) {
-    return this.adminAdsService.getAllCategories(params);
-  }
+  // @Get('all')
+  // getAllCategories(@Query() params: ListPageDto) {
+  //   return this.adminAdsService.getAllCategories(params);
+  // }
 
   @Patch(':id')
   async update(@Param('id') id: string, @Body() params: UpdateAdsDto) {

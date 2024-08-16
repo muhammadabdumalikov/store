@@ -10,12 +10,15 @@ import { ListPageDto } from 'src/shared/dto/list.dto';
 
 @Injectable()
 export class AdminCategoryService {
-  constructor(private readonly adminCategoryRepo: AdminCategoryRepo) {}
+  constructor(private readonly adminCategoryRepo: AdminCategoryRepo) { }
 
   create(params: CreateCategoryDto) {
     return this.adminCategoryRepo.insert({
       name_uz: params.name_uz,
       name_ru: params.name_ru,
+      image_original: params?.image_original,
+      image_small: params?.image_small,
+      parent_id: params?.parent_id,
     });
   }
 
@@ -43,9 +46,6 @@ export class AdminCategoryService {
   }
 
   async getAllCategories(params: ListPageDto) {
-    return this.adminCategoryRepo.select(
-      { is_deleted: false },
-      { limit: params.limit, offset: params.offset },
-    );
+    return this.adminCategoryRepo.getAllCategories(params);
   }
 }

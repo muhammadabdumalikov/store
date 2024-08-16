@@ -25,15 +25,15 @@ export class OrdersController {
     return this.ordersService.createOrder(params);
   }
 
-  @UseGuards(AuthGuard)
-  @ApiBearerAuth('authorization')
-  @Get('list')
-  async orderList(
-    @Query() params: OrderListDto,
-    @CurrentUser() currentUser: IUser,
-  ) {
-    return this.ordersService.orderList(params, currentUser);
-  }
+  // @UseGuards(AuthGuard)
+  // @ApiBearerAuth('authorization')
+  // @Get('list')
+  // async orderList(
+  //   @Query() params: OrderListDto,
+  //   @CurrentUser() currentUser: IUser,
+  // ) {
+  //   return this.ordersService.orderList(params, currentUser);
+  // }
 
   @UseGuards(AuthGuard)
   @ApiBearerAuth('authorization')

@@ -65,20 +65,20 @@ export class OrdersService {
     return { success: true };
   }
 
-  async orderList(params: OrderListDto, currentUser: IUser) {
-    return await this.orderRepo.select(
-      {
-        seller_id: currentUser.id,
-        status: Number(params.status),
-        is_deleted: false,
-      },
-      {
-        limit: params.limit,
-        offset: params.offset,
-        order_by: { column: 'created_at', order: 'desc', use: true },
-      },
-    );
-  }
+  // async orderList(params: OrderListDto, currentUser: IUser) {
+  //   return await this.orderRepo.select(
+  //     {
+  //       seller_id: currentUser.id,
+  //       status: Number(params.status),
+  //       is_deleted: false,
+  //     },
+  //     {
+  //       limit: params.limit,
+  //       offset: params.offset,
+  //       order_by: { column: 'created_at', order: 'desc', use: true },
+  //     },
+  //   );
+  // }
 
   async deleteFromList(id: string, currentUser: IUser) {
     const order = await this.orderRepo.select({

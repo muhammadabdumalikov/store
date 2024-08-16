@@ -30,8 +30,8 @@ export class AdminCategoryController {
     return this.adminCategoryService.create(params);
   }
 
-  @Get('all')
-  getAllCategories(@Query() params: ListPageDto) {
+  @Post('all')
+  getAllCategories(@Body() params: ListPageDto) {
     return this.adminCategoryService.getAllCategories(params);
   }
 

@@ -26,10 +26,10 @@ export class SuperAdminController {
     return this.adminUserService.createSuperAdmin(params);
   }
 
-  @Get('list')
-  async list(@Query() params: ListPageDto) {
-    return this.adminUserService.findAllAdmins(params);
-  }
+  // @Get('list')
+  // async list(@Query() params: ListPageDto) {
+  //   return this.adminUserService.findAllAdmins(params);
+  // }
 
   @Delete(':id')
   async delete(@Param('id') id: string) {
