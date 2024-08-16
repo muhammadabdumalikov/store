@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { BaseRepo } from 'src/providers/base-dao';
+import { GetChildCategoriesDto } from './dto/category.dto';
 
 @Injectable()
 export class CategoryRepo extends BaseRepo<any> {

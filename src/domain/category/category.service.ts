@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CategoryRepo } from './category.repo';
+import { GetChildCategoriesDto } from './dto/category.dto';
 
 @Injectable()
 export class CategoryService {
