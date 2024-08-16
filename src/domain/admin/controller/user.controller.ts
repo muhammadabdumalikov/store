@@ -30,10 +30,10 @@ export class AdminUserController {
     return this.adminUserService.setStatus(params);
   }
 
-  @Get('list')
-  async list(@Query() params: ListPageDto) {
-    return this.adminUserService.findAll(params);
-  }
+  // @Get('list')
+  // async list(@Query() params: ListPageDto) {
+  //   return this.adminUserService.findAll(params);
+  // }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {

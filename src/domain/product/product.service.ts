@@ -38,12 +38,12 @@ export class ProductService {
     });
   }
 
-  getUserProducts(params: ListPageDto, user: IUser) {
-    return this.productRepo.select(
-      { is_deleted: false, owner_id: user.id },
-      { limit: params.limit, offset: params.offset },
-    );
-  }
+  // getUserProducts(params: ListPageDto, user: IUser) {
+  //   return this.productRepo.select(
+  //     { is_deleted: false, owner_id: user.id },
+  //     { limit: params.limit, offset: params.offset },
+  //   );
+  // }
 
   listByCategory(params: ProductListByCategoryDto, user: IUser) {
     return this.productRepo.listByCategory(params, user);

@@ -41,10 +41,10 @@ export class AdminAdvertisementService {
     return this.adsRepo.softDelete(id);
   }
 
-  async getAllCategories(params: ListPageDto) {
-    return this.adsRepo.select(
-      { is_deleted: false },
-      { limit: params.limit, offset: params.offset },
-    );
-  }
+  // async getAllCategories(params: ListPageDto) {
+  //   return this.adsRepo.select(
+  //     { is_deleted: false },
+  //     { limit: params.limit, offset: params.offset },
+  //   );
+  // }
 }
