@@ -15,29 +15,42 @@ create table category
 (
     id         varchar(24) not null primary key,
     name_uz    varchar(64) not null,
-    name_lat   varchar(64) not null,
     name_ru    varchar(64) not null,
-    image      text        null,
+    image_original      text        null,
+    image_small      text        null,
     parent_id  varchar(24),
     constraint fk_parent_category foreign key (parent_id) references category (id),
     is_deleted bool        not null     default false,
     created_at timestamp with time zone default now()
 );
 
+create table shop
+(
+    id             varchar(24) not null primary key,
+    name           varchar(64) not null,
+    description    text,
+    avif_image      text        null,
+    small_image      text        null,
+    login           varchar(24) not null,
+    password        text        not null,
+    status         smallint     not null default 1,
+    is_deleted     bool        not null     default false,
+    created_at     timestamp with time zone default now()
+);
+
 create table products
 (
     id             varchar(24) not null primary key,
     name_uz        varchar(64) not null,
-    name_lat       varchar(64) not null,
     name_ru        varchar(64) not null,
     image          text        null,
     category_id    varchar(24),
     constraint fk_category foreign key (category_id) references category (id),
     price          integer       not null,
-    sale_price     integer,
+    discount_price     integer,
     count          smallint    not null,
-    owner_id       varchar(24),
-    constraint fk_owner foreign key (owner_id) references users (id),
+    shop_id       varchar(24),
+    constraint fk_owner foreign key (owner_id) references shop (id),
     characteristic jsonb,
     description    text,
     is_deleted     bool        not null     default false,
