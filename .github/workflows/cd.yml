@@ -25,6 +25,6 @@ jobs:
         script: |
           cd ~/projects/store
           git pull origin main
-          git status
           npm install --only=prod
+          npm run build
           pm2 restart stroymarket
