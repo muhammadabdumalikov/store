@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 
-const HTTP_PORT = process.env.HTTP_PORT || 3001;
+const HTTP_PORT = process.env.HTTP_PORT || 4444;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
