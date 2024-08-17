@@ -32,14 +32,14 @@ export class FileRouterService {
       const avifCommand = new PutObjectCommand({
         Body: avifBuffer, // The actual file content
         Bucket: BUCKET_NAME,
-        Key: `${filename}/avif-image`, // The name of the file
+        Key: `${filename}/original`, // The name of the file
         ContentType: mimetype,
       });
 
       const smallSizeCommand = new PutObjectCommand({
         Body: smallSizeBuffer, // The actual file content
         Bucket: BUCKET_NAME,
-        Key: `${filename}/small-image`, // The name of the file
+        Key: `${filename}/small`, // The name of the file
         ContentType: mimetype,
       });
 
@@ -66,7 +66,8 @@ export class FileRouterService {
   async compressAndConvertToAvif(imageBuffer: Buffer) {
     try {
       const avifBuffer = await sharp(imageBuffer)
-        .avif({ quality: 50 }) // Adjust quality as needed
+        .avif({ quality: 50 })
+        // .resize({ height: 170, width: 170 })
         .toBuffer();
       console.log('Image successfully compressed and converted to AVIF format');
       return avifBuffer;
@@ -80,7 +81,6 @@ export class FileRouterService {
     try {
       const avifBuffer = await sharp(imageBuffer)
         .png({ compressionLevel: 9 })
-        .resize({ height: 50, width: 30 }) // Adjust quality as needed
         .toBuffer();
       console.log(
         'Image successfully compressed and converted to SMALL format',
