@@ -5,7 +5,7 @@ import { ListPageDto } from 'src/shared/dto/list.dto';
 @Injectable()
 export class AdminCategoryRepo extends BaseRepo<any> {
   constructor() {
-    super('categories');
+    super('category');
   }
 
   getAllCategories(params: ListPageDto) {

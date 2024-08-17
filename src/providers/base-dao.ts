@@ -43,17 +43,17 @@ export class BaseRepo<T extends {}> extends KnexBaseRepo {
 
   private _insert(values, options) {
     const { returning = ['*'], generateId = true } = options;
-    // if (Array.isArray(values) && values.length > 0 && generateId) {
-    //   values.forEach((value) => {
-    //     value.id = this.generateRecordId();
-    //   });
-    // }
-    // if (!Array.isArray(values) && generateId && !values.id) {
-    //   values.id = this.generateRecordId();
-    // }
-    // if (generateId && values && Array.isArray(values)) {
-    //   values = values.map((v) => ({ ...v, id: this.generateRecordId() }));
-    // }
+    if (Array.isArray(values) && values.length > 0 && generateId) {
+      values.forEach((value) => {
+        value.id = this.generateRecordId();
+      });
+    }
+    if (!Array.isArray(values) && generateId && !values.id) {
+      values.id = this.generateRecordId();
+    }
+    if (generateId && values && Array.isArray(values)) {
+      values = values.map((v) => ({ ...v, id: this.generateRecordId() }));
+    }
     return this.knex.insert(values).into(this._tableName).returning(returning);
   }
 

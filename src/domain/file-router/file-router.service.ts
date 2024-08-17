@@ -53,8 +53,8 @@ export class FileRouterService {
         sucess: true,
         file_id: filename,
         // original_image: `https://eu2.contabostorage.com/a4fb51113a804943ad9b818ac4809297:${'images'}/${filename}/original-image`,
-        avif_image: `https://eu2.contabostorage.com/a4fb51113a804943ad9b818ac4809297:${'images'}/${filename}/avif-image`,
-        small_image: `https://eu2.contabostorage.com/a4fb51113a804943ad9b818ac4809297:${'images'}/${filename}/small-image`,
+        image_original: `https://eu2.contabostorage.com/a4fb51113a804943ad9b818ac4809297:${'images'}/${filename}/original`,
+        image_small: `https://eu2.contabostorage.com/a4fb51113a804943ad9b818ac4809297:${'images'}/${filename}/small`,
       };
     } catch (error) {
       console.log(error);

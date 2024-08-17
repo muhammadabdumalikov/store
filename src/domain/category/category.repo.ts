@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { BaseRepo } from 'src/providers/base-dao';
 import { GetChildCategoriesDto } from './dto/category.dto';
+import { ListPageDto } from 'src/shared/dto/list.dto';
 
 @Injectable()
 export class CategoryRepo extends BaseRepo<any> {
   constructor() {
-    super('categories');
+    super('category');
   }
 
   async getWithChildren(parent_id: string) {
@@ -76,14 +77,12 @@ export class CategoryRepo extends BaseRepo<any> {
       .select([
         'parent.id',
         'parent.name_uz',
-        'parent.name_lat',
         'parent.name_ru',
         knex.raw(` 
             jsonb_agg(case when child.id is not null 
               then json_build_object(
               'id', child.id,
               'name_uz', child.name_uz,
-              'name_lat', child.name_lat,
               'name_ru', child.name_ru
             ) else null
              end)
@@ -115,14 +114,9 @@ export class CategoryRepo extends BaseRepo<any> {
     return data;
   }
 
-  async getAllParentCategories() {
-    const knex = this.knexService.instance;
+  async getAllParentCategories(params: ListPageDto) {
+    const query = this.knex.select('*').from(this._tableName);
 
-    const query = knex
-      .select(['c.id', 'c.name_uz', 'c.name_ru'])
-      .from('categories as c')
-      .where('is_deleted', false);
-
-    return query;
+    return this.paginatedSelect(query, params?.page, params?.per_page);
   }
 }

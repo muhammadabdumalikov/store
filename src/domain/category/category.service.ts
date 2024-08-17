@@ -18,7 +18,7 @@ export class CategoryService {
     return this.categoryRepo.getWithChildren(parent_id);
   }
 
-  async getAllParentCategories() {
-    return this.categoryRepo.getAllParentCategories();
+  async getAllParentCategories(params) {
+    return this.categoryRepo.getAllParentCategories(params);
   }
 }

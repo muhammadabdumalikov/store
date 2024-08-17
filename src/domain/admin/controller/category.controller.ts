@@ -25,7 +25,7 @@ import { ListPageDto } from 'src/shared/dto/list.dto';
 export class AdminCategoryController {
   constructor(private readonly adminCategoryService: AdminCategoryService) {}
 
-  @Post()
+  @Post('create')
   create(@Body() params: CreateCategoryDto) {
     return this.adminCategoryService.create(params);
   }
